@@ -39,8 +39,9 @@ export class Player {
     this.sneaking=this.keys.has('ShiftLeft')||this.keys.has('ShiftRight');
     const forward=(this.keys.has('KeyW')?1:0)-(this.keys.has('KeyS')?1:0), strafe=(this.keys.has('KeyD')?1:0)-(this.keys.has('KeyA')?1:0);
     const length=Math.hypot(forward,strafe)||1, speed=this.flying?PLAYER_CONSTANTS.flySpeed:this.sneaking?PLAYER_CONSTANTS.sneakSpeed:this.sprinting?PLAYER_CONSTANTS.sprintSpeed:PLAYER_CONSTANTS.walkSpeed;
+    const effectSpeed=this.effects?1+this.effects.level('speed')*.2-this.effects.level('slowness')*.15:1;
     const f=forward/length, s=strafe/length;
-    this.velocity.x=(Math.sin(this.yaw)*f+Math.cos(this.yaw)*s)*speed/20; this.velocity.z=(Math.cos(this.yaw)*f-Math.sin(this.yaw)*s)*speed/20;
+    this.velocity.x=(Math.sin(this.yaw)*f+Math.cos(this.yaw)*s)*speed*Math.max(.1,effectSpeed)/20; this.velocity.z=(Math.cos(this.yaw)*f-Math.sin(this.yaw)*s)*speed*Math.max(.1,effectSpeed)/20;
     if(this.flying){this.velocity.y=((this.keys.has('Space')?1:0)-(this.sneaking?1:0))*speed/20;}
     else {if(this.keys.has('Space')&&this.onGround){this.velocity.y=PLAYER_CONSTANTS.jumpVelocity;this.onGround=false;}this.velocity.y=(this.velocity.y+PLAYER_CONSTANTS.gravity)*PLAYER_CONSTANTS.verticalDrag;}
     this.onGround=false; this.moveAxis('y',this.velocity.y);this.moveAxis('x',this.velocity.x);this.moveAxis('z',this.velocity.z);this.updateCamera();

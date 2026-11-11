@@ -1,7 +1,8 @@
 import { ITEMS } from '../../data/items.js';
 import { findRecipe } from '../systems/crafting.js';
 
-export const cloneStack = stack => stack ? { ...stack } : null;
+export const cloneStack = stack => stack ? { ...stack, ...(stack.meta ? { meta: { ...stack.meta } } : {}) } : null;
+export const sameStackType = (a,b) => a.id === b.id && JSON.stringify(a.meta??null) === JSON.stringify(b.meta??null);
 export const maximumStack = stack => ITEMS[stack?.id]?.stack ?? 64;
 export class ItemContainer {
   constructor(size = 27, slots = null) { this.slots = slots ?? Array(size).fill(null); if (this.slots.length !== size) throw new Error('Container size mismatch'); }
@@ -21,7 +22,7 @@ export function transferStack(source, index, destination) {
   if (!stack) return false;
   let remaining = stack.count;
   const maximum = maximumStack(stack);
-  for (const target of destination.slots) if (target?.id === stack.id && target.count < maximum) { const moved = Math.min(remaining, maximum - target.count); target.count += moved; remaining -= moved; if (!remaining) break; }
+  for (const target of destination.slots) if (target && sameStackType(target,stack) && target.count < maximum) { const moved = Math.min(remaining, maximum - target.count); target.count += moved; remaining -= moved; if (!remaining) break; }
   for (let target = 0; target < destination.slots.length && remaining; target += 1) if (!destination.slots[target]) { const moved = Math.min(remaining, maximum); destination.slots[target] = { ...stack, count: moved }; remaining -= moved; }
   if (remaining === stack.count) return false;
   if (remaining) source.slots[index] = { ...stack, count: remaining }; else source.slots[index] = null;
@@ -41,14 +42,14 @@ export class CursorStack {
         slot.count -= taken; if (!slot.count) container.slots[index] = null;
         return true;
       }
-      if (slot && (slot.id !== this.held.id || slot.count >= maximumStack(slot))) return false;
+      if (slot && (!sameStackType(slot,this.held) || slot.count >= maximumStack(slot))) return false;
       if (slot) slot.count += 1; else container.slots[index] = { ...this.held, count: 1 };
       this.held.count -= 1; if (!this.held.count) this.held = null;
       return true;
     }
     if (!this.held) { if (!slot) return false; this.held = slot; container.slots[index] = null; return true; }
     if (!slot) { container.slots[index] = this.held; this.held = null; return true; }
-    if (slot.id === this.held.id) {
+    if (sameStackType(slot,this.held)) {
       const moved = Math.min(this.held.count, maximumStack(slot) - slot.count);
       if (moved <= 0) return false;
       slot.count += moved; this.held.count -= moved; if (!this.held.count) this.held = null;

@@ -11,18 +11,19 @@ export class CombatSystem {
   }
   get charge() { return attackCharge(this.cooldown / this.maximumCooldown); }
   protection(inventory) { return armorProtection(inventory.equipment); }
-  receiveDamage(survival, amount, inventory, frontal = false) {
+  receiveDamage(survival, amount, inventory, frontal = false, effects = null) {
+    amount *= 1 - (effects?.level('resistance') ?? 0) * .2;
     const shielded = this.blocking && frontal && inventory.equipment.offhand?.id === 'shield' ? Math.max(0, amount - 5) : amount;
     const reduced = mitigateDamage(shielded, this.protection(inventory));
     return survival.damage(reduced, 'combat');
   }
-  attack(mob, itemId, player, mobs, inventory) {
+  attack(mob, itemId, player, mobs, inventory, effects = null) {
     if (!mob || mob.hp <= 0 || mob.hurtTicks > 0 || this.cooldown < this.maximumCooldown) return null;
     const dx = mob.position.x - player.position.x, dy = mob.position.y + mob.stats.height / 2 - (player.position.y + 1.62), dz = mob.position.z - player.position.z;
     if (dx * dx + dy * dy + dz * dz > 9) return null;
     const weapon = WEAPONS[itemId] ?? { damage: 1, attackSpeed: 4 };
     const charge = this.charge, critical = player.velocity.y < 0 && !player.onGround && !player.sprinting;
-    const damage = chargedDamage(weapon.damage, charge, critical);
+    const damage = Math.max(0, chargedDamage(weapon.damage, charge, critical) + (effects?.level('strength') ?? 0) * 3 - (effects?.level('weakness') ?? 0) * 4);
     this.maximumCooldown = Math.max(1, Math.round(20 / weapon.attackSpeed)); this.cooldown = 0;
     if (WEAPONS[itemId]) inventory.damageSelected(1);
     return this.hurt(mob, damage, mobs, { x: dx, z: dz }, 6 + (critical ? 2 : 0));

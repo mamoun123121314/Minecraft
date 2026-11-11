@@ -22,6 +22,8 @@ jobs:
       - run: npm run combat
       - run: npm run containers
       - run: npm run food
+      - name: Brewing and effects
+        run: npm run brewing
       - run: npm run save
       - run: npm run world
       - run: npm run gravity
