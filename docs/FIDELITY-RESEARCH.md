@@ -6,15 +6,15 @@ Baseline: **Java 26.1.2** from [PrismarineJS minecraft-data](https://github.com/
 
 | Registry | Current Java | Cubeworld overlap | Coverage |
 |---|---:|---:|---:|
-| Blocks | 1168 | 113 | 9.67% |
-| Items | 1506 | 228 | 15.14% |
-| Recipes | 887 | 83 | 9.36% |
+| Blocks | 1168 | 120 | 10.27% |
+| Items | 1506 | 234 | 15.54% |
+| Recipes | 887 | 91 | 10.26% |
 | Entities | 157 | 9 | 5.73% |
 | Biomes | 65 | 5 | 7.69% |
 
 ## Behavior coverage
 
-Registry overlap is not behavior parity. Cubeworld 1.16.0 remains approximately **19% behavior-complete** across the full requested Java scope. This engineering estimate weighs complete systems and their integration, not names. Fluids, farming, melee combat, armor, shields and projectiles are useful subsets, not complete Java systems. Missing mechanics include exact projectile ballistics/pickup and charging, attack attributes and enchantments, most entity interactions, redstone, dimensions/structures, brewing, and most containers.
+Registry overlap is not behavior parity. Cubeworld 1.17.0 remains approximately **21% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Redstone currently covers edited dust networks and a small device subset; it lacks Java's complete update order, quasi-connectivity, pistons, comparators, tripwire, all connection shapes and many powered blocks. Major gaps remain in entities, dimensions, structures, progression and the full block/item catalogs.
 
 ## Fidelity priorities
 
