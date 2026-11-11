@@ -1,14 +1,15 @@
 import { Furnace } from '../systems/crafting.js';
 import { CursorStack, CraftingGrid } from '../player/containers.js';
-import { BrewingStand } from '../systems/brewing.js';
+import { BrewingSystem } from '../systems/brewing.js';
 
-const label = stack => stack ? `${stack.id === 'potion' ? stack.meta?.potion?.replaceAll('_',' ') : stack.id.replaceAll('_', ' ')}${stack.count > 1 ? ` ×${stack.count}` : ''}` : '';
+const label = stack => stack ? `${stack.id === 'potion' ? `${stack.meta?.kind && stack.meta.kind !== 'drinkable' ? `${stack.meta.kind} ` : ''}${stack.meta?.potion?.replaceAll('_',' ')}${stack.meta?.amplifier ? ' II' : stack.meta?.extended ? ' extended' : ''}` : stack.id.replaceAll('_', ' ')}${stack.count > 1 ? ` ×${stack.count}` : ''}` : '';
 export function createInventoryUI(inventory, containers = null) {
   const overlay = document.createElement('div'); overlay.className = 'container-overlay hidden';
   overlay.innerHTML = '<div class="container-panel"><h2>Inventory</h2><div class="craft"><div class="craft-grid"></div><b>→</b><button class="result slot" aria-label="Crafting output"></button></div><div class="inventory-grid"></div><div class="panel-actions"><button data-panel="inventory">Inventory</button><button data-panel="furnace">Furnace</button><button data-panel="brewing">Brewing Stand</button></div><div class="machine"></div></div><div class="cursor-stack" aria-hidden="true"></div>';
   document.body.append(overlay);
   const grid = overlay.querySelector('.inventory-grid'), craftElement = overlay.querySelector('.craft-grid'), result = overlay.querySelector('.result'), machine = overlay.querySelector('.machine'), cursorElement = overlay.querySelector('.cursor-stack');
-  const cursor = new CursorStack(), crafting = new CraftingGrid(2), furnace = new Furnace(), brewing = new BrewingStand();
+  const cursor = new CursorStack(), crafting = new CraftingGrid(2), furnace = new Furnace(), brewingStands = new BrewingSystem();
+  let brewing = brewingStands.at();
   let panel = 'inventory', activeContainer = null;
   const slotButton = (container, index, destination = null) => {
     const button = document.createElement('button'); button.className = 'slot'; button.textContent = label(container.slots[index]); button.title = container.slots[index]?.id ?? 'Empty slot';
@@ -38,10 +39,10 @@ export function createInventoryUI(inventory, containers = null) {
     if (panel === 'brewing') { const row = document.createElement('div'); row.className = 'brewing-row'; for(let index=0;index<5;index+=1)row.append(brewingButton(index)); const status = document.createElement('p'); status.textContent = `Fuel ${brewing.fuelUses}/20 · Progress ${brewing.progress}/400`; machine.append(row, status); }
   }
   result.addEventListener('click', () => { crafting.takeOutput(cursor); render(); });
-  overlay.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => { activeContainer = null; panel = button.dataset.panel; render(); }));
+  overlay.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => { activeContainer = null; panel = button.dataset.panel; brewing = brewingStands.at(); render(); }));
   overlay.addEventListener('mousemove', event => { cursorElement.style.left = `${event.clientX + 12}px`; cursorElement.style.top = `${event.clientY + 12}px`; });
   const open = () => { overlay.classList.remove('hidden'); document.exitPointerLock(); render(); };
   const close = () => { crafting.returnItems(inventory); if (cursor.held) { inventory.add(cursor.held.id, cursor.held.count, cursor.held.meta); cursor.held = null; } overlay.classList.add('hidden'); activeContainer = null; panel = 'inventory'; };
   render();
-  return { furnace, brewing, overlay, cursor, containers, toggle() { if (overlay.classList.contains('hidden')) open(); else close(); }, close, openChest(position) { if (!containers) return false; activeContainer = containers.at(position); panel = 'chest'; open(); return true; }, openFurnace() { activeContainer = null; panel = 'furnace'; open(); }, openBrewing() { activeContainer = null; panel = 'brewing'; open(); }, render };
+  return { furnace, brewingStands, get brewing() { return brewing; }, overlay, cursor, containers, toggle() { if (overlay.classList.contains('hidden')) open(); else close(); }, close, openChest(position) { if (!containers) return false; activeContainer = containers.at(position); panel = 'chest'; open(); return true; }, openFurnace() { activeContainer = null; panel = 'furnace'; open(); }, openBrewing(position = null) { activeContainer = null; brewing = brewingStands.at(position); panel = 'brewing'; open(); }, render };
 }
