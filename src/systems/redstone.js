@@ -6,7 +6,7 @@ const DUST = new Set(['redstone_wire']);
 const SOURCES = new Set(['redstone_block', 'redstone_torch', 'lever', 'stone_button']);
 const DEVICES = new Set(['redstone_lamp', 'oak_door', 'redstone_repeater', 'observer']);
 const FACING = Object.freeze({ north: [0, 0, -1], south: [0, 0, 1], east: [1, 0, 0], west: [-1, 0, 0] });
-const tracked = name => DUST.has(name) || SOURCES.has(name) || DEVICES.has(name);
+const tracked = name => DUST.has(name) || SOURCES.has(name) || DEVICES.has(name) || name?.endsWith('_door');
 
 /** Deterministic dust propagation and scheduled device updates for edited/loaded redstone networks. */
 export class RedstoneSystem {
@@ -66,10 +66,10 @@ export class RedstoneSystem {
       const { x, y, z } = position, name = this.name(x, y, z), key = keyOf(x, y, z), oldPower = this.power.get(key) ?? 0, power = next.get(key) ?? 0;
       if (DUST.has(name)) {
         if (oldPower !== power) { this.setState(x, y, z, { ...this.state(x, y, z), power }); changed.push({ x, y, z }); }
-      } else if (name === 'redstone_lamp' || name === 'oak_door') {
+      } else if (name === 'redstone_lamp' || name.endsWith('_door')) {
         const powered = this.directPower(x, y, z, next) > 0 || power > 0;
         const state = this.state(x, y, z);
-        if (Boolean(state.powered) !== powered || name === 'oak_door' && Boolean(state.open) !== powered) { this.setState(x, y, z, { ...state, powered, ...(name === 'oak_door' ? { open: powered } : {}) }); changed.push({ x, y, z }); }
+        if (Boolean(state.powered) !== powered) { this.setState(x, y, z, { ...state, powered, ...(name.endsWith('_door') ? { open: powered } : {}) }); changed.push({ x, y, z }); }
       } else if (name === 'redstone_repeater') {
         const facing = FACING[this.state(x, y, z).facing ?? 'north'], input = this.directPower(x - facing[0], y, z - facing[2], next) > 0;
         if (input !== Boolean(this.state(x, y, z).input) && !this.queue.some(job => job.action === 'repeater' && keyOf(job.x, job.y, job.z) === key)) {
@@ -85,7 +85,6 @@ export class RedstoneSystem {
     const name = this.name(x, y, z), state = this.state(x, y, z);
     if (name === 'lever') { this.setState(x, y, z, { ...state, powered: !state.powered }); this.rebuild(); return true; }
     if (name === 'stone_button' && !state.powered) { this.setState(x, y, z, { ...state, powered: true }); this.schedule(x, y, z, 20, 'button'); this.rebuild(); return true; }
-    if (name === 'oak_door') { this.setState(x, y, z, { ...state, open: !state.open }); return true; }
     return false;
   }
   tick() {
