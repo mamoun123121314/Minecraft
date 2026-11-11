@@ -35,3 +35,6 @@
 
 ## 1.2.0 — Block and Texture Expansion
 - Expanded the data-driven registry to 103 blocks and the procedural atlas to more than 110 original 16×16 textures, covering stones, ores, six wood families, colored wool, utility blocks, plants, liquids, Nether and End materials. The item registry now contains 215 block items, tools, armor, materials, foods, and equipment, and 80 crafting plus 7 smelting recipes, with automated registry, mapping, stack-limit, recipe-output, fuel-value, texture-size, and visual-uniqueness checks.
+
+## 1.3.0 — Current Java Fidelity Baseline
+- Established a reproducible Java 26.1.2 research baseline from the MIT-licensed PrismarineJS factual registry dataset, measured every content gap, calibrated 100 overlapping block property sets and 217 item stack limits, and added immutable registry hashes plus CI drift detection.
