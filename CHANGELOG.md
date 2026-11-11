@@ -50,3 +50,6 @@
 
 ## 1.7.0 — Ambient Occlusion and Night Shading
 - Added true per-vertex three-neighbor ambient occlusion with 0.55/0.78/0.92/1.0 tiers on every visible face, retained directional face shading, and connected daylight to terrain, foliage, and translucent material brightness so the world becomes genuinely dark beneath the night sky.
+
+## 1.8.0 — Two-Channel Voxel Lighting
+- Added per-chunk skylight columns, opacity-aware block-light flood fill, per-vertex sky and block light attributes, an exact brightness-curve voxel shader, warm emitter tinting, daylight-independent block light, and placeable non-solid light sources.
