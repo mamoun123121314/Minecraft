@@ -1,4 +1,5 @@
 import { CHUNK_MIN_Y, CHUNK_MAX_Y, blockIndex } from '../world/chunk.js';
+import { pointCollides } from '../world/shapes.js';
 
 export const PLAYER_CONSTANTS = Object.freeze({
   width: 0.6, height: 1.8, sneakHeight: 1.5, eyeHeight: 1.62, sneakEyeHeight: 1.27,
@@ -27,7 +28,7 @@ export class Player {
   }
   collides(x,y,z){
     const half=PLAYER_CONSTANTS.width/2, height=this.sneaking?PLAYER_CONSTANTS.sneakHeight:PLAYER_CONSTANTS.height;
-    for(const px of [x-half,x+half])for(const pz of [z-half,z+half])for(const py of [y+0.01,y+height-0.01])if(solidAt(this.blocks,px,py,pz))return true;
+    for(const px of [x-half,x+half])for(const pz of [z-half,z+half])for(const py of [y+0.01,y+height-0.01])if(solidAt(this.blocks,px,py,pz)){const state=typeof this.blocks.getBlockState==='function'?this.blocks.getBlockState(bx,by,bz):null;if(pointCollides(blockAt(this.blocks,bx,by,bz),state,px-bx,py-by,pz-bz))return true;}
     return false;
   }
   moveAxis(axis,amount){
