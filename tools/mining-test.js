@@ -1,0 +1,1 @@
+import{breakTicks}from'../src/player/mining.js';const wood=Math.ceil(breakTicks(1.5,2,true));const hand=Math.ceil(breakTicks(1.5,1,false));if(wood!==23||hand!==150)throw Error(`${wood}/${hand}`);console.log('Mining timing passed: wooden pick 23 ticks, hand 150 ticks.');
