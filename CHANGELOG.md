@@ -65,3 +65,6 @@
 
 ## 1.12.0 — Food and Eating
 - Added calibrated nutrition and saturation for 15 foods, 32-tick eating, full-hunger gating, held-item cancellation, inventory consumption, saturation clamping, live hunger HUD, and live hotbar counts.
+
+## 1.13.0 — Block States and Shapes
+- Added persistent per-block orientation state, cardinal player-facing placement, half-height slabs, oriented two-step stairs, post-and-rail fences, connected-form walls, thin rotated doors, and atomic two-block door placement with upper-space validation.

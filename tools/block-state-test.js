@@ -1,0 +1,14 @@
+import{WorldMap}from'../src/world/world.js';
+import{CHUNK_VOLUME,blockIndex}from'../src/world/chunk.js';
+import{BLOCKS}from'../data/blocks.js';
+import{placeBlock,facingFromYaw}from'../src/world/blockactions.js';
+import{meshChunk}from'../src/world/mesher.js';
+if(facingFromYaw(0)!=='south'||facingFromYaw(Math.PI/2)!=='west'||facingFromYaw(Math.PI)!=='north'||facingFromYaw(Math.PI*1.5)!=='east')throw Error('Cardinal yaw mapping failed');
+const world=new WorldMap();world.addChunk(0,0,new Uint16Array(CHUNK_VOLUME));const player={position:{x:8,y:80,z:8},yaw:Math.PI};
+if(!placeBlock(world,{x:2,y:64,z:2},'oak_stairs',player)||world.getBlockState(2,64,2).facing!=='north')throw Error('Stair orientation state failed');
+if(!placeBlock(world,{x:4,y:64,z:2},'oak_door',player)||world.getBlock(4,65,2)!==BLOCKS.oak_door.id||world.getBlockState(4,64,2).half!=='lower'||world.getBlockState(4,65,2).half!=='upper')throw Error('Two-block door placement failed');
+world.setBlock(6,65,2,BLOCKS.stone.id);if(placeBlock(world,{x:6,y:64,z:2},'oak_door',player)||world.getBlock(6,64,2)!==0)throw Error('Door must reject an occupied upper half');
+const uv=Object.fromEntries(Object.values(BLOCKS).flatMap(block=>[block.texture,...Object.values(block.textures??{})]).filter(Boolean).map(name=>[name,[0,0,1,1]])),blocks=new Uint16Array(CHUNK_VOLUME),states={};
+blocks[blockIndex(1,64,1)]=BLOCKS.oak_slab.id;blocks[blockIndex(3,64,1)]=BLOCKS.oak_stairs.id;states[blockIndex(3,64,1)]={facing:'north'};blocks[blockIndex(5,64,1)]=BLOCKS.oak_door.id;states[blockIndex(5,64,1)]={facing:'east'};const mesh=meshChunk(blocks,uv,states),ys=mesh.cutout.positions.filter((_,i)=>i%3===1),doorXs=[];for(let i=0;i<mesh.cutout.positions.length;i+=3)if(mesh.cutout.positions[i]>4.9)doorXs.push(mesh.cutout.positions[i]);
+if(!ys.includes(64.5)||!ys.includes(65))throw Error('Slab or stair heights missing');if(Math.max(...doorXs)-Math.min(...doorXs)>.188)throw Error('East-facing door must rotate to a thin X axis');
+console.log('Block-state checks passed: yaw, stair orientation, slabs, two-block doors, occupancy, and rotated model geometry.');
