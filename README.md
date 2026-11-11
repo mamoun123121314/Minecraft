@@ -6,7 +6,21 @@ A single-player voxel survival game in the browser. Original engine, original pr
 
 ## Controls
 
-Click the game to begin. Movement and survival controls arrive in their gated phases.
+| Input | Action |
+|---|---|
+| Click | Lock pointer / enable audio |
+| W A S D | Move |
+| Mouse | Look |
+| Space | Jump; double-tap to toggle flight |
+| Shift | Sneak / descend while flying |
+| Ctrl | Sprint |
+| Left mouse | Mine targeted block |
+| 1–9 | Select hotbar slot |
+| E | Open or close inventory |
+| Esc | Pause / close inventory |
+| F3 | Toggle diagnostics |
+
+The atlas inspection page is available at [`?atlas`](https://mamoun123121314.github.io/Minecraft/?atlas).
 
 ## Progress
 
@@ -25,4 +39,8 @@ Click the game to begin. Movement and survival controls arrive in their gated ph
 
 ## Architecture
 
-Cubeworld is shipped as plain ES2022 modules with a vendored three.js renderer. The playable repository needs no build step or runtime network access; code-generated art, worker-based voxel systems, DOM UI, synthesized audio, and IndexedDB persistence are introduced through independently verified phases.
+Cubeworld ships as plain ES2022 modules with a vendored three.js renderer and no runtime build step. Procedural art is generated into a nearest-neighbour texture atlas, deterministic world generation and meshing use module workers, simulation runs at a fixed 20 Hz, interface layers use DOM and CSS, audio is synthesized with WebAudio, and saves are stored in IndexedDB using run-length compression.
+
+## Verification
+
+CI parses every module, scans for runtime networking and binary assets, validates the frozen palette, launches a headless browser, captures day/night/atlas screenshots, and runs deterministic tests for physics, mining, lighting, crafting, survival, and save round trips.

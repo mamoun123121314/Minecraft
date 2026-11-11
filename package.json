@@ -1,6 +1,6 @@
 {
   "name": "cubeworld",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "A single-player voxel survival game in the browser. Original engine, original procedural art.",
