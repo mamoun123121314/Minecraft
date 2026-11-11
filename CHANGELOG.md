@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.15.0 — Combat and Equipment
+- Added Java-calibrated tool/weapon attack damage and speed, cooldown charge scaling, three-block entity targeting, falling critical hits, knockback, and ten-tick hurt invulnerability.
+- Added equipable armor and offhand shields, armor/toughness mitigation with an 80% cap, durability consumption for combat/mining/equipment, and equipped-item death drops.
+- Added bow arrows and thrown tridents with original procedural mesh geometry, gravity, entity/world collision, deterministic damage, and geometry/material disposal.
+- Added mob death drops and edible rotten flesh, plus a deterministic combat suite in local and GitHub CI.
+
 ## 1.14.0 — Fluids and Farming
 - Added fixed-tick water and lava scheduling, downward and horizontal propagation, seven flowing levels, falling state, water source formation, obsidian/cobblestone reactions, source-only bucket pickup, bucket placement, and slab/stair waterlogging.
 - Added level-aware lowered and sloped liquid geometry and live chunk remeshing for fluid edits.

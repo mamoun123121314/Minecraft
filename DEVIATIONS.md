@@ -9,3 +9,6 @@
 | Position-scheduled fluid ticks | `src/world/fluids.js` | Bounded deterministic work within the existing single-player world | Java uses chunk tick lists with additional fluid edge and dimension rules |
 | Scheduled seeded crop attempts | `src/world/farming.js` | Reproducible bounded growth without random block selection over every loaded chunk | Java selects random block positions in ticking chunks and applies crop-specific random tick rules |
 | Separate wet farmland id | `data/blocks.js` | Preserves the pre-existing registry while sharing farmland behavior | Java represents moisture as farmland block state 0–7 |
+| Click-to-full-power bow | `src/main.js` | Fits the existing single-action input path without adding a hold/charge HUD | Java charges bows over time and scales arrow speed/damage by draw time |
+| Projectile lifetime and pickup | `src/systems/combat.js` | Provides deterministic collision and bounded mesh lifetime without a ground-item entity system | Java arrows embed in blocks and tridents remain as recoverable throws with distinct loyalty behavior |
+| Simplified equipment input | `src/player/inventory.js` | Right-click equips armor/shield within the existing inventory UI | Java also supports dedicated armor/offhand slot dragging and creative inventory interactions |
