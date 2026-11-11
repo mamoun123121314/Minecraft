@@ -36,6 +36,7 @@ jobs:
       - run: npm run block-actions
       - run: npm run block-states
       - run: npm run block-families
+      - run: npm run shape-targets
       - run: npm run blocks
       - run: npm run items
       - run: npm run recipes
