@@ -29,3 +29,6 @@
 
 ## Phase 9 — Persistence and Polish
 - Added IndexedDB world saves with RLE, local settings, synthesized audio, particles, rain and snow, pause and settings menus, autosave, and populated F3 diagnostics.
+
+## 1.1.0 — Expanded World and Mobile Controls
+- Expanded the initial world from one chunk to a worker-generated 3×3 region, added cross-chunk collision and raycasting, and introduced dual-stick-style mobile movement, look, jump, mining, inventory, and pause controls.
