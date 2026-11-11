@@ -35,8 +35,8 @@ export function createInventoryUI(inventory, containers = null) {
     machine.replaceChildren();
     if (panel === 'chest' && activeContainer) { const chest = document.createElement('div'); chest.className = 'chest-grid'; for (let index = 0; index < activeContainer.size; index += 1) chest.append(slotButton(activeContainer, index, inventory)); machine.append(chest); }
     if (panel === 'furnace') { const row = document.createElement('div'); row.className = 'furnace-row'; row.append(furnaceButton(0), furnaceButton(1), furnaceButton(2)); const status = document.createElement('p'); status.textContent = `Burn ${furnace.burn} · Progress ${furnace.progress}/200`; machine.append(row, status); }
+    if (panel === 'brewing') { const row = document.createElement('div'); row.className = 'brewing-row'; for(let index=0;index<5;index+=1)row.append(brewingButton(index)); const status = document.createElement('p'); status.textContent = `Fuel ${brewing.fuelUses}/20 · Progress ${brewing.progress}/400`; machine.append(row, status); }
   }
-  if (panel === 'brewing') { const row = document.createElement('div'); row.className = 'brewing-row'; for(let index=0;index<5;index+=1)row.append(brewingButton(index)); const status = document.createElement('p'); status.textContent = `Fuel ${brewing.fuelUses}/20 · Progress ${brewing.progress}/400`; machine.append(row, status); }
   result.addEventListener('click', () => { crafting.takeOutput(cursor); render(); });
   overlay.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => { activeContainer = null; panel = button.dataset.panel; render(); }));
   overlay.addEventListener('mousemove', event => { cursorElement.style.left = `${event.clientX + 12}px`; cursorElement.style.top = `${event.clientY + 12}px`; });
