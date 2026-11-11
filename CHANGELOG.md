@@ -38,3 +38,6 @@
 
 ## 1.3.0 — Current Java Fidelity Baseline
 - Established a reproducible Java 26.1.2 research baseline from the MIT-licensed PrismarineJS factual registry dataset, measured every content gap, calibrated 100 overlapping block property sets and 217 item stack limits, and added immutable registry hashes plus CI drift detection.
+
+## 1.4.0 — Full-Height Streaming Overworld
+- Replaced the 128-block bounded demonstration with 384-block chunks spanning Y −64 through 319, ragged deep bedrock, deepslate transition, current ore depth bands, broader continental terrain, and on-demand 3×3 chunk streaming that follows the player indefinitely.

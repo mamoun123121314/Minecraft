@@ -1,4 +1,4 @@
-import { CHUNK_SIZE, CHUNK_HEIGHT, blockIndex } from './chunk.js';
+import { CHUNK_SIZE, CHUNK_MIN_Y, CHUNK_MAX_Y, blockIndex } from './chunk.js';
 import { BLOCK_BY_ID } from '../../data/blocks.js';
 
 const FACES = [
@@ -10,12 +10,12 @@ const FACES = [
   { normal: [0,0,-1], shade: 0.8, key: 'side', corners: [[0,0,0],[1,0,0],[1,1,0],[0,1,0]] }
 ];
 const INDEX_ORDER = [0,1,2,0,2,3];
-const isOccluding=(blocks,x,y,z,currentId)=>{if(x<0||x>=CHUNK_SIZE||y<0||y>=CHUNK_HEIGHT||z<0||z>=CHUNK_SIZE)return false;const neighbour=blocks[blockIndex(x,y,z)];if(!neighbour)return false;if(neighbour===currentId&&!BLOCK_BY_ID[currentId]?.opaque)return true;return BLOCK_BY_ID[neighbour]?.opaque??false;};
+const isOccluding=(blocks,x,y,z,currentId)=>{if(x<0||x>=CHUNK_SIZE||y<CHUNK_MIN_Y||y>CHUNK_MAX_Y||z<0||z>=CHUNK_SIZE)return false;const neighbour=blocks[blockIndex(x,y,z)];if(!neighbour)return false;if(neighbour===currentId&&!BLOCK_BY_ID[currentId]?.opaque)return true;return BLOCK_BY_ID[neighbour]?.opaque??false;};
 
 export function meshChunk(blocks, uvTable) {
   const positions = [], normals = [], colors = [], uvs = [], indices = [];
   let vertex = 0;
-  for (let y = 0; y < CHUNK_HEIGHT; y += 1) for (let z = 0; z < CHUNK_SIZE; z += 1) for (let x = 0; x < CHUNK_SIZE; x += 1) {
+  for (let y = CHUNK_MIN_Y; y <= CHUNK_MAX_Y; y += 1) for (let z = 0; z < CHUNK_SIZE; z += 1) for (let x = 0; x < CHUNK_SIZE; x += 1) {
     const id = blocks[blockIndex(x,y,z)];
     if (!id) continue;
     for (let faceIndex = 0; faceIndex < FACES.length; faceIndex += 1) {

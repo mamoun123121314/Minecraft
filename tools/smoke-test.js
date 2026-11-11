@@ -15,9 +15,11 @@ try {
   page.on('pageerror', (error) => errors.push(error.message));
   page.on('request', (request) => { if (new URL(request.url()).origin !== `http://127.0.0.1:${port}`) errors.push(`External request: ${request.url()}`); });
   await page.goto(`http://127.0.0.1:${port}`, { waitUntil: 'networkidle0' });
-  await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 5000 });
+  await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 10000 });
   const phaseTwo = await page.evaluate(() => ({ phase: window.__cubeworld.phase, calls: window.__cubeworld.drawCalls(), vertices: window.__cubeworld.geometry.attributes.position.count, hash: window.__cubeworld.terrainHash }));
   if (phaseTwo.phase !== 9 || phaseTwo.calls > 24 || phaseTwo.vertices < 1000 || !phaseTwo.hash) errors.push(`Invalid Phase 2 scene: ${JSON.stringify(phaseTwo)}`);
+  const streaming = await page.evaluate(async () => { await window.__cubeworld.updateStreaming(40, 8); return { chunks: window.__cubeworld.terrainGroup.children.length, generated: !!window.__cubeworld.world.getChunk(2, 0), volume: window.__cubeworld.world.getChunk(2, 0)?.blocks.length }; });
+  if (streaming.chunks !== 9 || !streaming.generated || streaming.volume !== 98304) errors.push(`Invalid streaming world: ${JSON.stringify(streaming)}`);
   const result = await page.evaluate(() => {
     const canvas = document.querySelector('canvas');
     const fps = document.querySelector('#fps');
@@ -46,10 +48,10 @@ try {
   await page.screenshot({ path: 'artifacts/mobile.png' });
   await page.setViewport({ width: 1280, height: 720, isMobile: false, hasTouch: false });
   await page.goto(`http://127.0.0.1:${port}/?time=18000`, { waitUntil: 'networkidle0' });
-  await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 5000 });
+  await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 10000 });
   await page.screenshot({ path: 'artifacts/night.png' });
   await page.goto(`http://127.0.0.1:${port}/?atlas`, { waitUntil: 'networkidle0' });
-  await page.waitForFunction(() => window.__cubeworld?.ready === true && window.__cubeworld?.atlasCount >= 110, { timeout: 5000 });
+  await page.waitForFunction(() => window.__cubeworld?.ready === true && window.__cubeworld?.atlasCount >= 110, { timeout: 10000 });
   const atlasResult = await page.evaluate(() => ({ count: document.querySelectorAll('.atlas-grid figure').length, sizes: [...document.querySelectorAll('.atlas-grid canvas')].every((canvas) => canvas.width === 16 && canvas.height === 16), blocks: window.__cubeworld.blockCount, missing: window.__cubeworld.missingTextures, unique: window.__cubeworld.uniqueTextures }));
   if (atlasResult.count < 110 || atlasResult.blocks < 100 || atlasResult.missing.length || atlasResult.unique < 100 || !atlasResult.sizes) errors.push(`Invalid atlas: ${JSON.stringify(atlasResult)}`);
   await page.screenshot({ path: 'artifacts/atlas.png', fullPage: true });
