@@ -6,11 +6,15 @@ Baseline: **Java 26.1.2** from [PrismarineJS minecraft-data](https://github.com/
 
 | Registry | Current Java | Cubeworld overlap | Coverage |
 |---|---:|---:|---:|
-| Blocks | 1168 | 100 | 8.56% |
-| Items | 1506 | 217 | 14.41% |
-| Recipes | 887 | 80 | 9.02% |
+| Blocks | 1168 | 113 | 9.67% |
+| Items | 1506 | 226 | 15.01% |
+| Recipes | 887 | 83 | 9.36% |
 | Entities | 157 | 9 | 5.73% |
 | Biomes | 65 | 5 | 7.69% |
+
+## Behavior coverage
+
+Registry overlap is not behavior parity. Cubeworld 1.14.0 remains approximately **15% behavior-complete** across the full requested Java scope. This engineering estimate weighs complete systems and their integration, not names. The release implements useful subsets of fluids and farming; it does not include Java's complete tick scheduling, fluid interactions, crop random-tick model, collision shapes, loot conditions, dimension rules, or every related block and item. Redstone, complete combat/equipment, full entity AI, dimensions/structures, brewing/enchanting, and most containers remain absent or partial.
 
 ## Fidelity priorities
 

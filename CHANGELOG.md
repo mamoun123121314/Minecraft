@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.14.0 — Fluids and Farming
+- Added fixed-tick water and lava scheduling, downward and horizontal propagation, seven flowing levels, falling state, water source formation, obsidian/cobblestone reactions, source-only bucket pickup, bucket placement, and slab/stair waterlogging.
+- Added level-aware lowered and sloped liquid geometry and live chunk remeshing for fluid edits.
+- Added hoe durability use, farmland conversion, four-block hydration, trampling, wheat/carrot/potato/beetroot/nether-wart/cocoa growth, pumpkin/melon stems and fruit, sugar-cane/cactus growth, bone meal, mature loot, grass seed drops, and seed/bone-meal recipes.
+- Added eight crop blocks with per-stage original procedural textures, six seed/material items, deterministic fluid/farming test suites, and Java 26.1.2 calibration for all 113 overlapping blocks and 226 overlapping items.
+
 ## Phase 0 — Scaffold
 - Added the static browser entry point, WebGL renderer, loading screen, FPS counter, CI checks, and Pages deployment.
 
