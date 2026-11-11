@@ -1,4 +1,5 @@
 import { CHUNK_SIZE, CHUNK_HEIGHT, blockIndex } from './chunk.js';
+import { BLOCK_BY_ID } from '../../data/blocks.js';
 
 const FACES = [
   { normal: [1,0,0], shade: 0.6, key: 'side', corners: [[1,0,0],[1,0,1],[1,1,1],[1,1,0]] },
@@ -8,10 +9,8 @@ const FACES = [
   { normal: [0,0,1], shade: 0.8, key: 'side', corners: [[1,0,1],[0,0,1],[0,1,1],[1,1,1]] },
   { normal: [0,0,-1], shade: 0.8, key: 'side', corners: [[0,0,0],[1,0,0],[1,1,0],[0,1,0]] }
 ];
-const single=(name)=>({top:name,bottom:name,side:name});
-const IDS={1:{top:'grass_top',bottom:'dirt',side:'grass_side'},2:single('dirt'),3:single('stone'),4:single('bedrock'),5:single('water_still'),6:single('sand'),7:single('gravel'),8:single('coal_ore'),9:single('iron_ore'),10:single('diamond_ore'),12:single('snow_block'),13:single('obsidian'),14:{top:'oak_log_top',bottom:'oak_log_top',side:'oak_log_side'},15:single('oak_leaves')};
 const INDEX_ORDER = [0,1,2,0,2,3];
-const isSolid = (blocks, x, y, z) => x >= 0 && x < CHUNK_SIZE && y >= 0 && y < CHUNK_HEIGHT && z >= 0 && z < CHUNK_SIZE && blocks[blockIndex(x,y,z)] !== 0;
+const isOccluding=(blocks,x,y,z,currentId)=>{if(x<0||x>=CHUNK_SIZE||y<0||y>=CHUNK_HEIGHT||z<0||z>=CHUNK_SIZE)return false;const neighbour=blocks[blockIndex(x,y,z)];if(!neighbour)return false;if(neighbour===currentId&&!BLOCK_BY_ID[currentId]?.opaque)return true;return BLOCK_BY_ID[neighbour]?.opaque??false;};
 
 export function meshChunk(blocks, uvTable) {
   const positions = [], normals = [], colors = [], uvs = [], indices = [];
@@ -21,8 +20,9 @@ export function meshChunk(blocks, uvTable) {
     if (!id) continue;
     for (let faceIndex = 0; faceIndex < FACES.length; faceIndex += 1) {
       const face = FACES[faceIndex];
-      if (isSolid(blocks, x + face.normal[0], y + face.normal[1], z + face.normal[2])) continue;
-      const texture = IDS[id][face.key];
+      if (isOccluding(blocks,x+face.normal[0],y+face.normal[1],z+face.normal[2],id)) continue;
+      const definition=BLOCK_BY_ID[id];if(!definition)continue;
+      const texture=definition.textures?.[face.key]??definition.texture;
       const uv = uvTable[texture];
       const ao = face.key === 'top' ? 1 : 0.92;
       for (let corner = 0; corner < 4; corner += 1) {
