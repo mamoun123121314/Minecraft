@@ -1,16 +1,11 @@
-export const RECIPES=[
- {pattern:['L'],key:{L:'oak_log'},out:{id:'oak_planks',count:4}},
- {pattern:['P','P'],key:{P:'oak_planks'},out:{id:'stick',count:4}},
- {pattern:['PP','PP'],key:{P:'oak_planks'},out:{id:'crafting_table',count:1}},
- {pattern:['CCC','C C','CCC'],key:{C:'cobblestone'},out:{id:'furnace',count:1}},
- {pattern:['PPP','P P','PPP'],key:{P:'oak_planks'},out:{id:'chest',count:1}},
- {pattern:['PPP',' S ',' S '],key:{P:'oak_planks',S:'stick'},out:{id:'wooden_pickaxe',count:1}},
- {pattern:['CCC',' S ',' S '],key:{C:'cobblestone',S:'stick'},out:{id:'stone_pickaxe',count:1}},
- {pattern:['III',' S ',' S '],key:{I:'iron_ingot',S:'stick'},out:{id:'iron_pickaxe',count:1}},
- {pattern:['C','S'],key:{C:'coal',S:'stick'},out:{id:'torch',count:4}},
- {pattern:['WWW'],key:{W:'wheat'},out:{id:'bread',count:1}},
- {pattern:['III','III','III'],key:{I:'iron_ingot'},out:{id:'iron_block',count:1}},
- {pattern:['I I',' I '],key:{I:'iron_ingot'},out:{id:'bucket',count:1}}
+const recipes=[
+ {pattern:['L'],key:{L:'oak_log'},out:{id:'oak_planks',count:4}},{pattern:['P','P'],key:{P:'oak_planks'},out:{id:'stick',count:4}},{pattern:['PP','PP'],key:{P:'oak_planks'},out:{id:'crafting_table',count:1}},{pattern:['CCC','C C','CCC'],key:{C:'cobblestone'},out:{id:'furnace',count:1}},{pattern:['PPP','P P','PPP'],key:{P:'oak_planks'},out:{id:'chest',count:1}},{pattern:['C','S'],key:{C:'coal',S:'stick'},out:{id:'torch',count:4}},{pattern:['WWW'],key:{W:'wheat'},out:{id:'bread',count:1}},{pattern:['I I',' I '],key:{I:'iron_ingot'},out:{id:'bucket',count:1}},{pattern:['PPP','PPP'],key:{P:'oak_planks'},out:{id:'oak_trapdoor',count:2}},{pattern:['P P','PPP','P P'],key:{P:'oak_planks'},out:{id:'oak_fence',count:3}},{pattern:['P  ','PP ','PPP'],key:{P:'oak_planks'},out:{id:'oak_stairs',count:4}},{pattern:['PPP'],key:{P:'oak_planks'},out:{id:'oak_slab',count:6}}
 ];
-export const SMELTING=Object.freeze({sand:{out:'glass',ticks:200,xp:.1},iron_ore:{out:'iron_ingot',ticks:200,xp:.7},cobblestone:{out:'stone',ticks:200,xp:.1}});
-export const FUELS=Object.freeze({coal:1600,oak_planks:300,oak_log:300,stick:100,lava_bucket:20000});
+const toolPatterns={pickaxe:['MMM',' S ',' S '],axe:['MM ','MS ',' S '],shovel:[' M ',' S ',' S '],sword:[' M ',' M ',' S '],hoe:['MM ',' S ',' S ']};
+for(const [material,itemName]of Object.entries({wooden:'oak_planks',stone:'cobblestone',iron:'iron_ingot',golden:'gold_ingot',diamond:'diamond',netherite:'netherite_ingot'}))for(const [tool,pattern]of Object.entries(toolPatterns))recipes.push({pattern,key:{M:itemName,S:'stick'},out:{id:`${material}_${tool}`,count:1}});
+const armorPatterns={helmet:['MMM','M M'],chestplate:['M M','MMM','MMM'],leggings:['MMM','M M','M M'],boots:['M M','M M']};for(const [material,itemName]of Object.entries({leather:'leather',iron:'iron_ingot',golden:'gold_ingot',diamond:'diamond'}))for(const [piece,pattern]of Object.entries(armorPatterns))recipes.push({pattern,key:{M:itemName},out:{id:`${material}_${piece}`,count:1}});
+for(const [material,blockName]of Object.entries({iron_ingot:'iron_block',gold_ingot:'gold_block',diamond:'diamond_block',emerald:'emerald_block',coal:'coal_block',lapis_lazuli:'lapis_block',copper_ingot:'copper_block'})){recipes.push({pattern:['MMM','MMM','MMM'],key:{M:material},out:{id:blockName,count:1}});recipes.push({pattern:['B'],key:{B:blockName},out:{id:material,count:9}});}
+recipes.push({pattern:['PPP',' W ',' W '],key:{P:'oak_planks',W:'white_wool'},out:{id:'white_bed',count:1}},{pattern:['PPP','P P','PPP'],key:{P:'cobblestone'},out:{id:'stone_bricks',count:4}},{pattern:['P P','PPP','P P'],key:{P:'stick'},out:{id:'ladder',count:3}},{pattern:['PPP','P P'],key:{P:'oak_planks'},out:{id:'oak_boat',count:1}},{pattern:['PPP',' B ','PPP'],key:{P:'oak_planks',B:'book'},out:{id:'bookshelf',count:1}},{pattern:[' I ','III'],key:{I:'iron_ingot'},out:{id:'minecart',count:1}},{pattern:['PPP','PTP','PPP'],key:{P:'gunpowder',T:'sand'},out:{id:'tnt',count:1}},{pattern:[' S ','SPS',' S '],key:{S:'stick',P:'oak_planks'},out:{id:'oak_sign',count:3}});
+export const RECIPES=Object.freeze(recipes);
+export const SMELTING=Object.freeze({sand:{out:'glass',ticks:200,xp:.1},iron_ore:{out:'iron_ingot',ticks:200,xp:.7},gold_ore:{out:'gold_ingot',ticks:200,xp:1},copper_ore:{out:'copper_ingot',ticks:200,xp:.7},cobblestone:{out:'stone',ticks:200,xp:.1},oak_log:{out:'charcoal',ticks:200,xp:.15},beef:{out:'cooked_beef',ticks:200,xp:.35}});
+export const FUELS=Object.freeze({coal:1600,charcoal:1600,oak_planks:300,oak_log:300,stick:100,lava_bucket:20000});
