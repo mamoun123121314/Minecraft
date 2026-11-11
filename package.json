@@ -1,6 +1,6 @@
 {
   "name": "cubeworld",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": true,
   "type": "module",
   "description": "A single-player voxel survival game in the browser. Original engine, original procedural art.",
@@ -17,10 +17,13 @@
     "world": "node tools/world-test.js",
     "blocks": "node tools/block-catalog-test.js",
     "items": "node tools/item-catalog-test.js",
-    "recipes": "node tools/recipe-catalog-test.js"
+    "recipes": "node tools/recipe-catalog-test.js",
+    "research": "node tools/research-java-current.js",
+    "fidelity-java": "node tools/java-fidelity-test.js"
   },
   "devDependencies": {
     "acorn": "8.14.0",
+    "minecraft-data": "^3.119.0",
     "puppeteer": "23.10.4"
   }
 }
