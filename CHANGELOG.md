@@ -11,3 +11,6 @@
 
 ## Phase 3 — Procedural World Generation
 - Added seeded climate biomes, octave terrain, caves, depth-banded ores, sea-level water, trees, world-generation workers, and deterministic terrain hashes.
+
+## Phase 4 — Player Physics and Controls
+- Added first-person pointer-lock controls, normalized movement, sprint, sneak, creative flight, fixed 20 Hz physics, swept collision, and locked gameplay constants.
