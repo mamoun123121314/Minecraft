@@ -18,7 +18,7 @@ try {
   await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 10000 });
   const phaseTwo = await page.evaluate(() => ({ phase: window.__cubeworld.phase, calls: window.__cubeworld.drawCalls(), vertices: window.__cubeworld.geometry.attributes.position.count, hash: window.__cubeworld.terrainHash }));
   if (phaseTwo.phase !== 9 || phaseTwo.calls > 24 || phaseTwo.vertices < 1000 || !phaseTwo.hash) errors.push(`Invalid Phase 2 scene: ${JSON.stringify(phaseTwo)}`);
-  const streaming = await page.evaluate(async () => { await window.__cubeworld.updateStreaming(40, 8); return { chunks: window.__cubeworld.terrainGroup.children.length, generated: !!window.__cubeworld.world.getChunk(2, 0), volume: window.__cubeworld.world.getChunk(2, 0)?.blocks.length }; });
+  const streaming = await page.evaluate(async () => { window.__cubeworld.player.position.x = 40; window.__cubeworld.player.position.z = 8; await window.__cubeworld.updateStreaming(40, 8); return { chunks: window.__cubeworld.terrainGroup.children.length, generated: !!window.__cubeworld.world.getChunk(2, 0), volume: window.__cubeworld.world.getChunk(2, 0)?.blocks.length }; });
   if (streaming.chunks !== 9 || !streaming.generated || streaming.volume !== 98304) errors.push(`Invalid streaming world: ${JSON.stringify(streaming)}`);
   const result = await page.evaluate(() => {
     const canvas = document.querySelector('canvas');
