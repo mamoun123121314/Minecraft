@@ -23,6 +23,8 @@ jobs:
       - run: npm run save
       - run: npm run world
       - run: npm run gravity
+      - run: npm run fluids
+      - run: npm run farming
       - run: npm run mesher
       - run: npm run block-actions
       - run: npm run block-states
