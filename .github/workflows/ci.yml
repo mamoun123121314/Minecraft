@@ -16,6 +16,7 @@ jobs:
       - run: npm run physics
       - run: npm run mining
       - run: npm run lighting
+      - run: npm run crafting
       - name: Run browser smoke test
         shell: bash
         run: |
