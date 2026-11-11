@@ -1,0 +1,4 @@
+import{BLOCKS}from'../../data/blocks.js';
+const intersectsPlayer=(position,player)=>{const half=.3,minX=player.position.x-half,maxX=player.position.x+half,minY=player.position.y,maxY=player.position.y+1.8,minZ=player.position.z-half,maxZ=player.position.z+half;return position.x<maxX&&position.x+1>minX&&position.y<maxY&&position.y+1>minY&&position.z<maxZ&&position.z+1>minZ;};
+export function placeBlock(world,position,itemId,player){const block=BLOCKS[itemId];if(!block||block.id===0||!block.solid||world.getBlock(position.x,position.y,position.z)!==0||intersectsPlayer(position,player))return false;return world.setBlock(position.x,position.y,position.z,block.id);}
+export function pickBlockItem(blockId){return Object.values(BLOCKS).find(block=>block.id===blockId)?.name??null;}
