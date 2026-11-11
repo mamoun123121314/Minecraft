@@ -6,15 +6,21 @@ Baseline: **Java 26.1.2** from [PrismarineJS minecraft-data](https://github.com/
 
 | Registry | Current Java | Cubeworld overlap | Coverage |
 |---|---:|---:|---:|
-| Blocks | 1168 | 152 | 13.01% |
-| Items | 1506 | 265 | 17.6% |
-| Recipes | 887 | 123 | 13.87% |
+| Blocks | 1168 | 153 | 13.10% |
+| Items | 1506 | 277 | 18.39% |
+| Recipes | 887 | 131 | 14.77% |
 | Entities | 157 | 9 | 5.73% |
 | Biomes | 65 | 5 | 7.69% |
 
 ## Behavior coverage
 
-Registry overlap is not behavior parity. Cubeworld 1.18.0 remains approximately **23% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families now have real placement, model and collision states, but stairs do not yet calculate Java's inner/outer corner shapes and raycast selection still uses full voxel bounds. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
+Registry overlap is not behavior parity. Cubeworld 1.19.0 remains approximately **24% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families now have real placement, model and collision states, but stairs do not yet calculate Java's inner/outer corner shapes and raycast selection still uses full voxel bounds. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
+
+### Brewing and effects (1.19.0)
+
+Twelve brewing transformations convert water bottles to awkward potions and then to base healing, harming, poison, regeneration, strength, swiftness, slowness, fire-resistance, water-breathing and weakness potions. Blaze powder provides 20 operations; each operation lasts 400 ticks and independently transforms up to three valid bottles. Drinking lasts 32 ticks, returns one glass bottle, and is cancelled when the held stack changes. Regeneration, poison, strength, weakness, resistance, speed and slowness have deterministic gameplay effects; potion metadata survives inventory operations and saves.
+
+This is not full Java brewing parity: splash and lingering potions, dragon's-breath conversion, redstone/glowstone extension and amplification, turtle-master, invisibility, night-vision, leaping, slow-falling, luck and decay are not implemented. Fire resistance and water breathing currently have registry/recipe data but no environmental system to consume their protection. Brewing stands use one global UI machine rather than position-persistent per-block inventories. Existing stair-corner and full-voxel selection limitations remain.
 
 ## Fidelity priorities
 
