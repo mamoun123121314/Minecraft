@@ -47,3 +47,6 @@
 
 ## 1.6.0 — Layered Voxel Rendering
 - Split every chunk mesh into opaque, alpha-tested cutout, and depth-write-disabled translucent geometry, with dedicated materials for solid terrain, leaves and plants, and water, glass, and ice.
+
+## 1.7.0 — Ambient Occlusion and Night Shading
+- Added true per-vertex three-neighbor ambient occlusion with 0.55/0.78/0.92/1.0 tiers on every visible face, retained directional face shading, and connected daylight to terrain, foliage, and translucent material brightness so the world becomes genuinely dark beneath the night sky.

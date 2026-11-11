@@ -53,6 +53,9 @@ try {
   await page.setViewport({ width: 1280, height: 720, isMobile: false, hasTouch: false });
   await page.goto(`http://127.0.0.1:${port}/?time=18000`, { waitUntil: 'networkidle0' });
   await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 10000 });
+  await page.waitForFunction(() => window.__cubeworld.materials.opaque.color.r < 0.3, { timeout: 3000 });
+  const nightLighting = await page.evaluate(() => ({ terrain: window.__cubeworld.materials.opaque.color.r, stars: window.__cubeworld.sky.stars.opacity }));
+  if (nightLighting.terrain >= 0.3 || nightLighting.stars <= 0.8) errors.push(`Invalid nighttime lighting: ${JSON.stringify(nightLighting)}`);
   await page.screenshot({ path: 'artifacts/night.png' });
   await page.goto(`http://127.0.0.1:${port}/?atlas`, { waitUntil: 'networkidle0' });
   await page.waitForFunction(() => window.__cubeworld?.ready === true && window.__cubeworld?.atlasCount >= 110, { timeout: 10000 });
