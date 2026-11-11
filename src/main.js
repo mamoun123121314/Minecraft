@@ -2,6 +2,7 @@ import { showAtlasDebug } from './render/atlas.js';
 import { createTerrainScene } from './render/renderer.js';
 import { Player } from './player/player.js';
 import {WorldTime} from './systems/time.js';
+import {createInventoryUI} from './ui/inventoryui.js';
 import {Inventory} from './player/inventory.js';import{MiningSystem,raycast}from'./player/mining.js';import{createHighlight}from'./render/highlight.js';import{createHud}from'./ui/hud.js';
 const game=document.querySelector('#game');
 if(new URLSearchParams(location.search).has('atlas'))showAtlasDebug(game);
