@@ -59,3 +59,6 @@
 
 ## 1.10.0 — Falling Blocks
 - Added deterministic scheduled gravity for sand and gravel, including one-block-per-tick descent, solid landing and stacking, replaceable-fluid displacement, support-removal updates, bounded tick work, and live remeshing.
+
+## 1.11.0 — Harvest and Loot
+- Added tool-class mining speeds, harvest tiers, canonical basic block drops, ore loot, no-drop handling for insufficient tools, and stack-aware inventory insertion, removal, overflow, and consumption. Mined loot now enters the player inventory.
