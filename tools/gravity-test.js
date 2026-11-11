@@ -1,0 +1,17 @@
+import{WorldMap}from'../src/world/world.js';
+import{CHUNK_VOLUME}from'../src/world/chunk.js';
+import{BLOCKS}from'../data/blocks.js';
+const world=new WorldMap();world.addChunk(0,0,new Uint16Array(CHUNK_VOLUME));
+world.setBlock(2,0,2,BLOCKS.stone.id);world.setBlock(2,4,2,BLOCKS.sand.id);
+let changes=world.tickGravity();
+if(world.getBlock(2,3,2)!==BLOCKS.sand.id||changes.length!==2)throw Error('Sand must descend one block per gravity tick');
+world.tickGravity();world.tickGravity();
+if(world.getBlock(2,1,2)!==BLOCKS.sand.id)throw Error('Sand must land above a solid block');
+world.setBlock(5,0,5,BLOCKS.stone.id);world.setBlock(5,1,5,BLOCKS.water.id);world.setBlock(5,2,5,BLOCKS.gravel.id);world.tickGravity();
+if(world.getBlock(5,1,5)!==BLOCKS.gravel.id||world.getBlock(5,2,5)!==0)throw Error('Gravity blocks must displace replaceable fluids');
+world.setBlock(8,0,8,BLOCKS.stone.id);world.setBlock(8,1,8,BLOCKS.sand.id);world.setBlock(8,2,8,BLOCKS.gravel.id);world.tickGravity();
+if(world.getBlock(8,2,8)!==BLOCKS.gravel.id)throw Error('Gravity blocks must stack on other gravity blocks');
+world.setBlock(8,1,8,0);world.tickGravity();
+if(world.getBlock(8,1,8)!==BLOCKS.gravel.id)throw Error('Removing support must schedule the block above');
+const limited=new WorldMap();limited.addChunk(0,0,new Uint16Array(CHUNK_VOLUME));for(let x=0;x<4;x++)limited.setBlock(x,10,0,BLOCKS.sand.id);const limitedChanges=limited.tickGravity(2);if(limitedChanges.length!==2||limited.gravityQueue.length<6)throw Error('Gravity processing budget must be deterministic');
+console.log('Gravity checks passed: falling, landing, fluid displacement, stacking, support updates, and tick budget.');

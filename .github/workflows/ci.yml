@@ -20,6 +20,7 @@ jobs:
       - run: npm run survival
       - run: npm run save
       - run: npm run world
+      - run: npm run gravity
       - run: npm run mesher
       - run: npm run block-actions
       - run: npm run blocks
