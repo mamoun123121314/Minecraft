@@ -1,6 +1,6 @@
 {
   "name": "cubeworld",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "private": true,
   "type": "module",
   "description": "A single-player voxel survival game in the browser. Original engine, original procedural art.",
@@ -21,7 +21,8 @@
     "research": "node tools/research-java-current.js",
     "fidelity-java": "node tools/java-fidelity-test.js",
     "block-actions": "node tools/block-action-test.js",
-    "mesher": "node tools/mesher-test.js"
+    "mesher": "node tools/mesher-test.js",
+    "gravity": "node tools/gravity-test.js"
   },
   "devDependencies": {
     "acorn": "8.14.0",

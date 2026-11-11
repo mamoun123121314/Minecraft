@@ -56,3 +56,6 @@
 
 ## 1.9.0 — Specialized Block Models
 - Replaced full-cube stand-ins with crossed plant quads, 0.875-height liquid surfaces, slim torch cuboids, and wall-flat ladders while retaining cutout/translucent lighting, interaction, and remeshing behavior.
+
+## 1.10.0 — Falling Blocks
+- Added deterministic scheduled gravity for sand and gravel, including one-block-per-tick descent, solid landing and stacking, replaceable-fluid displacement, support-removal updates, bounded tick work, and live remeshing.
