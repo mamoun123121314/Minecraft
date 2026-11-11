@@ -13,7 +13,7 @@ Click the game to begin. Movement and survival controls arrive in their gated ph
 | Phase | Deliverable | Status |
 |---:|---|:---:|
 | 0 | Browser scaffold, renderer, CI, deployment | ✅ |
-| 1 | Procedural texture atlas | ⬜ |
+| 1 | Procedural texture atlas | ✅ |
 | 2 | Chunk meshing and terrain rendering | ⬜ |
 | 3 | Procedural world generation | ⬜ |
 | 4 | Player physics and controls | ⬜ |

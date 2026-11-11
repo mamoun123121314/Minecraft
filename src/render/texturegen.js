@@ -1,0 +1,93 @@
+import { seeded } from '../core/rng.js';
+import { lerpHex } from '../core/math.js';
+import { P } from '../../data/palette.js';
+
+export class TexturePainter {
+  constructor() {
+    this.canvas = typeof OffscreenCanvas === 'function' ? new OffscreenCanvas(16, 16) : document.createElement('canvas');
+    this.canvas.width = 16;
+    this.canvas.height = 16;
+    this.ctx = this.canvas.getContext('2d', { alpha: true });
+    this.ctx.imageSmoothingEnabled = false;
+  }
+  fill(hex) { this.ctx.fillStyle = hex; this.ctx.fillRect(0, 0, 16, 16); return this; }
+  clear() { this.ctx.clearRect(0, 0, 16, 16); return this; }
+  px(x, y, hex) { this.ctx.fillStyle = hex; this.ctx.fillRect(x | 0, y | 0, 1, 1); return this; }
+  rect(x, y, width, height, hex) { this.ctx.fillStyle = hex; this.ctx.fillRect(x | 0, y | 0, width | 0, height | 0); return this; }
+  noise(seed, hexes, density) {
+    const random = seeded(seed);
+    const total = Math.floor(256 * density);
+    for (let i = 0; i < total; i += 1) this.px(Math.floor(random() * 16), Math.floor(random() * 16), hexes[Math.floor(random() * hexes.length)]);
+    return this;
+  }
+  speckle(seed, hex, count) {
+    const random = seeded(seed);
+    for (let i = 0; i < count; i += 1) this.px(Math.floor(random() * 16), Math.floor(random() * 16), hex);
+    return this;
+  }
+  border(hex, inset = 0) {
+    this.rect(inset, inset, 16 - inset * 2, 1, hex).rect(inset, 15 - inset, 16 - inset * 2, 1, hex);
+    this.rect(inset, inset, 1, 16 - inset * 2, hex).rect(15 - inset, inset, 1, 16 - inset * 2, hex);
+    return this;
+  }
+  gradientV(hexA, hexB) { for (let y = 0; y < 16; y += 1) this.rect(0, y, 16, 1, lerpHex(hexA, hexB, y / 15)); return this; }
+  blob(cx, cy, radius, hex) {
+    for (let y = -radius; y <= radius; y += 1) for (let x = -radius; x <= radius; x += 1) if (x * x + y * y <= radius * radius + ((x + y) & 1)) this.px(cx + x, cy + y, hex);
+    return this;
+  }
+  cracks(seed, hex, count) {
+    const random = seeded(seed);
+    for (let line = 0; line < count; line += 1) {
+      let x = 2 + Math.floor(random() * 12); let y = 2 + Math.floor(random() * 12);
+      for (let step = 0; step < 3 + Math.floor(random() * 5); step += 1) { this.px(x, y, hex); x += Math.floor(random() * 3) - 1; y += Math.floor(random() * 3) - 1; }
+    }
+    return this;
+  }
+  rings(cx, cy, hexA, hexB) {
+    this.fill(hexA);
+    for (let radius = 6; radius >= 2; radius -= 2) {
+      this.ctx.strokeStyle = radius % 4 ? hexB : hexA;
+      this.ctx.strokeRect(cx - radius, cy - radius, radius * 2, radius * 2);
+    }
+    return this;
+  }
+  overlay(baseCanvas, maskHex, alpha) { this.ctx.drawImage(baseCanvas, 0, 0); this.ctx.globalAlpha = alpha; this.rect(0, 0, 16, 4, maskHex); this.ctx.globalAlpha = 1; return this; }
+}
+
+const texture = (paint) => { const painter = new TexturePainter(); paint(painter); return painter.canvas; };
+const dither = (base, dark, light, seed) => texture((t) => t.fill(base).noise(seed, [dark], 0.23).noise(seed + 1, [light], 0.15));
+const ore = (color, seed) => texture((t) => {
+  t.fill(P.STONE).noise(seed, [P.STONE_DARK], 0.2).noise(seed + 1, [P.STONE_LIGHT], 0.12);
+  const random = seeded(seed + 2);
+  for (let i = 0; i < 5; i += 1) { const x = 3 + Math.floor(random() * 10); const y = 3 + Math.floor(random() * 10); t.blob(x, y, 1, color).px(x + 1, y + 1, P.STONE_DARK); }
+});
+
+export function generateTextures() {
+  const dirt = dither(P.DIRT, P.DIRT_DARK, P.DIRT_LIGHT, 11);
+  return {
+    grass_top: dither(P.GRASS_TOP, P.OAK_LEAF_D, P.GRASS_SIDE, 1),
+    grass_side: texture((t) => { t.ctx.drawImage(dirt, 0, 0); t.rect(0, 0, 16, 3, P.GRASS_TOP); for (let x = 0; x < 16; x += 3) t.px(x, 3 + (x % 2), P.GRASS_SIDE); }),
+    dirt,
+    stone: dither(P.STONE, P.STONE_DARK, P.STONE_LIGHT, 21),
+    cobblestone: texture((t) => t.fill(P.COBBLE).cracks(31, P.COBBLE_DARK, 12).speckle(32, P.COBBLE_LIGHT, 28)),
+    bedrock: dither(P.BEDROCK, P.BEDROCK_DARK, P.STONE, 41),
+    sand: dither(P.SAND, P.SAND_DARK, P.SANDSTONE, 51),
+    gravel: dither(P.GRAVEL, P.GRAVEL_DARK, P.CLAY, 61),
+    oak_planks: texture((t) => t.fill(P.OAK_PLANK).rect(0, 5, 16, 1, P.OAK_PLANK_D).rect(0, 11, 16, 1, P.OAK_PLANK_D).speckle(71, P.OAK_LOG_TOP, 24)),
+    oak_log_side: texture((t) => { t.fill(P.OAK_LOG); for (let x = 1; x < 16; x += 2) t.rect(x, 0, 1, 16, x % 4 ? P.OAK_LOG_D : P.DIRT_LIGHT); }),
+    oak_log_top: texture((t) => t.rings(8, 8, P.OAK_LOG_TOP, P.OAK_LOG_D).px(8, 8, P.OAK_LOG)),
+    oak_leaves: texture((t) => t.clear().noise(81, [P.OAK_LEAF, P.OAK_LEAF_D], 0.64)),
+    glass: texture((t) => t.clear().border(P.GLASS_EDGE).px(2, 2, P.GLASS).px(3, 2, P.GLASS)),
+    bricks: texture((t) => { t.fill(P.BRICK); for (let y = 3; y < 16; y += 4) t.rect(0, y, 16, 1, P.BRICK_MORTAR); for (let y = 0; y < 16; y += 4) for (let x = (y / 4) % 2 ? 3 : 7; x < 16; x += 8) t.rect(x, y, 1, 3, P.BRICK_MORTAR); }),
+    coal_ore: ore(P.COAL, 91),
+    iron_ore: ore(P.IRON, 101),
+    gold_ore: ore(P.GOLD, 111),
+    redstone_ore: ore(P.REDSTONE, 121),
+    diamond_ore: ore(P.DIAMOND, 131),
+    water_still: texture((t) => t.fill(P.WATER).noise(141, [P.WATER_DEEP], 0.18).rect(0, 2, 16, 1, P.WATER_SURF)),
+    lava_still: texture((t) => t.fill(P.LAVA).noise(151, [P.LAVA_DARK], 0.2).blob(6, 6, 2, P.LAVA_HOT).blob(12, 12, 1, P.LAVA_HOT)),
+    snow_block: dither(P.SNOW, P.SNOW_DARK, P.CLOUD, 161),
+    obsidian: dither(P.OBSIDIAN, P.OBSIDIAN_HI, P.NETHERITE, 171),
+    crafting_table_top: texture((t) => t.fill(P.OAK_PLANK).border(P.OAK_PLANK_D).rect(4, 4, 8, 8, P.OAK_LOG_TOP).cracks(181, P.OAK_LOG_D, 3))
+  };
+}
