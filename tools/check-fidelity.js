@@ -3,7 +3,7 @@ import { extname, join } from 'node:path';
 import { parse } from 'acorn';
 import { execFileSync } from 'node:child_process';
 
-const roots = ['src', 'vendor'];
+const roots = ['src', 'data', 'vendor'];
 const files = [];
 async function walk(path) {
   for (const entry of await readdir(path, { withFileTypes: true })) {
@@ -23,7 +23,15 @@ for (const file of files.filter((name) => extname(name) === '.js')) {
 }
 const tracked = execFileSync('git', ['ls-files'], { encoding: 'utf8' });
 if (/\.(png|jpe?g|gif|webp|ogg|mp3|wav|glb|gltf|ttf|woff2?)$/im.test(tracked)) throw new Error('Binary asset is tracked');
-for (const required of ['index.html', 'style.css', 'src/main.js', 'vendor/three.module.js', 'SPEC.md', 'README.md', 'LICENSE']) {
+for (const required of ['index.html', 'style.css', 'src/main.js', 'src/core/rng.js', 'src/core/math.js', 'src/render/texturegen.js', 'src/render/atlas.js', 'data/palette.js', 'tools/palette.lock.json', 'vendor/three.module.js', 'SPEC.md', 'README.md', 'LICENSE']) {
   await readFile(required);
 }
 console.log(`Fidelity checks passed (${files.length} source files checked).`);
+
+const paletteSource = await readFile('data/palette.js', 'utf8');
+const paletteMatch = paletteSource.match(/export const P = (\{[\s\S]*\});/);
+if (!paletteMatch) throw new Error('Palette export not found');
+const palette = Function(`return (${paletteMatch[1]})`)();
+const paletteLock = JSON.parse(await readFile('tools/palette.lock.json', 'utf8'));
+if (JSON.stringify(palette) !== JSON.stringify(paletteLock)) throw new Error('Palette lock mismatch');
+console.log(`Palette lock passed (${Object.keys(palette).length} colors).`);
