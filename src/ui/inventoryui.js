@@ -1,2 +1,44 @@
-import{findRecipe,Furnace}from'../systems/crafting.js';
-export function createInventoryUI(inventory){const overlay=document.createElement('div');overlay.className='container-overlay hidden';overlay.innerHTML='<div class="container-panel"><h2>Inventory</h2><div class="craft"><div class="craft-grid"></div><b>→</b><div class="result slot"></div></div><div class="inventory-grid"></div><div class="panel-actions"><button data-panel="inventory">Inventory</button><button data-panel="furnace">Furnace</button><button data-panel="chest">Chest</button></div><div class="machine"></div></div>';document.body.append(overlay);const grid=overlay.querySelector('.inventory-grid');for(let i=0;i<36;i++){const slot=document.createElement('div');slot.className='slot';slot.dataset.index=i;slot.textContent=inventory.slots[i]?.count??'';grid.append(slot);}const craft=overlay.querySelector('.craft-grid'),craftSlots=[];for(let i=0;i<4;i++){const slot=document.createElement('button');slot.className='slot';slot.addEventListener('click',()=>{craftSlots[i]=craftSlots[i]?null:{id:'oak_planks',count:1};slot.textContent=craftSlots[i]?'P':'';const out=findRecipe(craftSlots,2);overlay.querySelector('.result').textContent=out?`${out.id} ×${out.count}`:'';});craft.append(slot);}const furnace=new Furnace();overlay.querySelectorAll('[data-panel]').forEach(button=>button.addEventListener('click',()=>{const type=button.dataset.panel,machine=overlay.querySelector('.machine');machine.innerHTML=type==='furnace'?'<h3>Furnace</h3><div class="furnace-row"><div class="slot">Input</div><span>🔥</span><div class="slot">Fuel</div><span>→</span><div class="slot">Output</div></div>':type==='chest'?'<h3>Chest</h3><div class="chest-grid"></div>':'';if(type==='chest')for(let i=0;i<27;i++){const s=document.createElement('div');s.className='slot';machine.querySelector('.chest-grid').append(s);}}));return{furnace,overlay,toggle(){overlay.classList.toggle('hidden');if(!overlay.classList.contains('hidden'))document.exitPointerLock();},close(){overlay.classList.add('hidden');}};}
+import { Furnace } from '../systems/crafting.js';
+import { CursorStack, CraftingGrid } from '../player/containers.js';
+
+const label = stack => stack ? `${stack.id.replaceAll('_', ' ')}${stack.count > 1 ? ` ×${stack.count}` : ''}` : '';
+export function createInventoryUI(inventory, containers = null) {
+  const overlay = document.createElement('div'); overlay.className = 'container-overlay hidden';
+  overlay.innerHTML = '<div class="container-panel"><h2>Inventory</h2><div class="craft"><div class="craft-grid"></div><b>→</b><button class="result slot" aria-label="Crafting output"></button></div><div class="inventory-grid"></div><div class="panel-actions"><button data-panel="inventory">Inventory</button><button data-panel="furnace">Furnace</button></div><div class="machine"></div></div><div class="cursor-stack" aria-hidden="true"></div>';
+  document.body.append(overlay);
+  const grid = overlay.querySelector('.inventory-grid'), craftElement = overlay.querySelector('.craft-grid'), result = overlay.querySelector('.result'), machine = overlay.querySelector('.machine'), cursorElement = overlay.querySelector('.cursor-stack');
+  const cursor = new CursorStack(), crafting = new CraftingGrid(2), furnace = new Furnace();
+  let panel = 'inventory', activeContainer = null;
+  const slotButton = (container, index, destination = null) => {
+    const button = document.createElement('button'); button.className = 'slot'; button.textContent = label(container.slots[index]); button.title = container.slots[index]?.id ?? 'Empty slot';
+    button.addEventListener('click', event => { cursor.click(container, index, event.shiftKey ? 'shift' : event.button === 2 ? 'right' : 'left', destination); render(); });
+    button.addEventListener('contextmenu', event => { event.preventDefault(); cursor.click(container, index, 'right'); render(); });
+    return button;
+  };
+  const furnaceAdapter = () => ({ get slots() { return [furnace.input, furnace.fuel, furnace.output]; } });
+  const syncFurnace = slots => { [furnace.input, furnace.fuel, furnace.output] = slots; };
+  const furnaceButton = index => {
+    const button = document.createElement('button'); button.className = 'slot'; const stack = [furnace.input, furnace.fuel, furnace.output][index]; button.textContent = label(stack);
+    const operate = operation => { const slots = [furnace.input, furnace.fuel, furnace.output]; const adapter = { slots }; if (operation === 'shift') { if (stack) { const remaining = inventory.add(stack.id, stack.count); slots[index] = remaining ? { ...stack, count: remaining } : null; } } else cursor.click(adapter, index, operation); syncFurnace(slots); render(); };
+    button.addEventListener('click', event => operate(event.shiftKey ? 'shift' : 'left'));
+    button.addEventListener('contextmenu', event => { event.preventDefault(); operate('right'); });
+    return button;
+  };
+  function render() {
+    grid.replaceChildren(); for (let index = 0; index < 36; index += 1) grid.append(slotButton(inventory, index, activeContainer ?? crafting));
+    craftElement.replaceChildren(); for (let index = 0; index < 4; index += 1) craftElement.append(slotButton(crafting, index));
+    const output = crafting.output; result.textContent = output ? label(output) : ''; result.disabled = !output;
+    cursorElement.textContent = label(cursor.held);
+    overlay.querySelector('h2').textContent = panel === 'chest' ? 'Chest' : panel === 'furnace' ? 'Furnace' : 'Inventory';
+    machine.replaceChildren();
+    if (panel === 'chest' && activeContainer) { const chest = document.createElement('div'); chest.className = 'chest-grid'; for (let index = 0; index < activeContainer.size; index += 1) chest.append(slotButton(activeContainer, index, inventory)); machine.append(chest); }
+    if (panel === 'furnace') { const row = document.createElement('div'); row.className = 'furnace-row'; row.append(furnaceButton(0), furnaceButton(1), furnaceButton(2)); const status = document.createElement('p'); status.textContent = `Burn ${furnace.burn} · Progress ${furnace.progress}/200`; machine.append(row, status); }
+  }
+  result.addEventListener('click', () => { crafting.takeOutput(cursor); render(); });
+  overlay.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => { activeContainer = null; panel = button.dataset.panel; render(); }));
+  overlay.addEventListener('mousemove', event => { cursorElement.style.left = `${event.clientX + 12}px`; cursorElement.style.top = `${event.clientY + 12}px`; });
+  const open = () => { overlay.classList.remove('hidden'); document.exitPointerLock(); render(); };
+  const close = () => { crafting.returnItems(inventory); if (cursor.held) { inventory.add(cursor.held.id, cursor.held.count); cursor.held = null; } overlay.classList.add('hidden'); activeContainer = null; panel = 'inventory'; };
+  render();
+  return { furnace, overlay, cursor, containers, toggle() { if (overlay.classList.contains('hidden')) open(); else close(); }, close, openChest(position) { if (!containers) return false; activeContainer = containers.at(position); panel = 'chest'; open(); return true; }, openFurnace() { activeContainer = null; panel = 'furnace'; open(); }, render };
+}
