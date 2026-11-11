@@ -23,3 +23,6 @@
 
 ## Phase 7 — Inventory and Crafting
 - Added item stacks, recipe matching, inventory crafting, furnace fuel and smelting, chest storage panels, tool recipes, and interactive container UI.
+
+## Phase 8 — Survival and Mobs
+- Added health, hunger, exhaustion, fall and mob damage, XP, death drops, respawning, passive and hostile mobs, nighttime aggro, and death UI.
