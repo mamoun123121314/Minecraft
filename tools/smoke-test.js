@@ -49,9 +49,9 @@ try {
   await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 5000 });
   await page.screenshot({ path: 'artifacts/night.png' });
   await page.goto(`http://127.0.0.1:${port}/?atlas`, { waitUntil: 'networkidle0' });
-  await page.waitForFunction(() => window.__cubeworld?.ready === true && window.__cubeworld?.atlasCount >= 20, { timeout: 5000 });
-  const atlasResult = await page.evaluate(() => ({ count: document.querySelectorAll('.atlas-grid figure').length, sizes: [...document.querySelectorAll('.atlas-grid canvas')].every((canvas) => canvas.width === 16 && canvas.height === 16) }));
-  if (atlasResult.count < 20 || !atlasResult.sizes) errors.push(`Invalid atlas: ${JSON.stringify(atlasResult)}`);
+  await page.waitForFunction(() => window.__cubeworld?.ready === true && window.__cubeworld?.atlasCount >= 110, { timeout: 5000 });
+  const atlasResult = await page.evaluate(() => ({ count: document.querySelectorAll('.atlas-grid figure').length, sizes: [...document.querySelectorAll('.atlas-grid canvas')].every((canvas) => canvas.width === 16 && canvas.height === 16), blocks: window.__cubeworld.blockCount, missing: window.__cubeworld.missingTextures, unique: window.__cubeworld.uniqueTextures }));
+  if (atlasResult.count < 110 || atlasResult.blocks < 100 || atlasResult.missing.length || atlasResult.unique < 100 || !atlasResult.sizes) errors.push(`Invalid atlas: ${JSON.stringify(atlasResult)}`);
   await page.screenshot({ path: 'artifacts/atlas.png', fullPage: true });
   if (errors.length) throw new Error(errors.join('\n'));
   console.log(`Smoke test passed: mean=${result.mean.toFixed(1)}, luminance deviation=${result.variation.toFixed(1)}.`);

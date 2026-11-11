@@ -1,5 +1,6 @@
 import * as THREE from '../../vendor/three.module.js';
 import { generateTextures } from './texturegen.js';
+import { BLOCKS } from '../../data/blocks.js';
 
 export function buildAtlas() {
   const textures = generateTextures();
@@ -53,5 +54,5 @@ export function showAtlasDebug(root) {
     grid.append(figure);
   }
   root.append(header, grid);
-  window.__cubeworld = { ready: true, phase: 1, atlasCount: names.length };
+  const referenced=new Set();for(const block of Object.values(BLOCKS)){if(block.texture)referenced.add(block.texture);for(const value of Object.values(block.textures??{}))referenced.add(value);}const missing=[...referenced].filter(name=>!textures[name]);const hashes=new Set();for(const canvas of Object.values(textures)){const sample=document.createElement('canvas');sample.width=sample.height=16;const context=sample.getContext('2d');context.drawImage(canvas,0,0);const pixels=context.getImageData(0,0,16,16).data;let hash=2166136261;for(const value of pixels){hash^=value;hash=Math.imul(hash,16777619);}hashes.add(hash>>>0);}window.__cubeworld={ready:true,phase:1,atlasCount:names.length,blockCount:Object.keys(BLOCKS).length,missingTextures:missing,uniqueTextures:hashes.size};
 }

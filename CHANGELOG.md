@@ -32,3 +32,6 @@
 
 ## 1.1.0 — Expanded World and Mobile Controls
 - Expanded the initial world from one chunk to a worker-generated 3×3 region, added cross-chunk collision and raycasting, and introduced dual-stick-style mobile movement, look, jump, mining, inventory, and pause controls.
+
+## 1.2.0 — Block and Texture Expansion
+- Expanded the data-driven registry to 103 blocks and the procedural atlas to more than 110 original 16×16 textures, covering stones, ores, six wood families, colored wool, utility blocks, plants, liquids, Nether and End materials. The item registry now contains 215 block items, tools, armor, materials, foods, and equipment, and 80 crafting plus 7 smelting recipes, with automated registry, mapping, stack-limit, recipe-output, fuel-value, texture-size, and visual-uniqueness checks.

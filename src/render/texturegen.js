@@ -64,7 +64,7 @@ const ore = (color, seed) => texture((t) => {
 
 export function generateTextures() {
   const dirt = dither(P.DIRT, P.DIRT_DARK, P.DIRT_LIGHT, 11);
-  return {
+  const textures = {
     grass_top: dither(P.GRASS_TOP, P.OAK_LEAF_D, P.GRASS_SIDE, 1),
     grass_side: texture((t) => { t.ctx.drawImage(dirt, 0, 0); t.rect(0, 0, 16, 3, P.GRASS_TOP); for (let x = 0; x < 16; x += 3) t.px(x, 3 + (x % 2), P.GRASS_SIDE); }),
     dirt,
@@ -90,4 +90,18 @@ export function generateTextures() {
     obsidian: dither(P.OBSIDIAN, P.OBSIDIAN_HI, P.NETHERITE, 171),
     crafting_table_top: texture((t) => t.fill(P.OAK_PLANK).border(P.OAK_PLANK_D).rect(4, 4, 8, 8, P.OAK_LOG_TOP).cracks(181, P.OAK_LOG_D, 3))
   };
+  const solids = {
+    deepslate:[P.BEDROCK,P.BEDROCK_DARK,P.STONE_DARK],sandstone:[P.SANDSTONE,P.SANDSTONE_DARK,P.SAND],red_sand:[P.RED_SAND,P.DIRT_DARK,P.LAVA],clay:[P.CLAY,P.STONE_DARK,P.GLASS_EDGE],ice:[P.ICE,P.ICE_DARK,P.GLASS],
+    stone_bricks:[P.STONE_BRICK,P.STONE_BRICK_D,P.STONE_LIGHT],mossy_cobblestone:[P.COBBLE,P.OAK_LEAF_D,P.COBBLE_LIGHT],andesite:[P.STONE,P.STONE_DARK,P.CLAY],diorite:[P.CLAY,P.STONE,P.SNOW],granite:[P.BRICK,P.DIRT_DARK,P.DIRT_LIGHT],tuff:[P.STONE_DARK,P.BEDROCK,P.GRAVEL],calcite:[P.SNOW_DARK,P.CLAY,P.SNOW],dripstone:[P.DIRT,P.DIRT_DARK,P.DIRT_LIGHT],amethyst:[P.PURPUR,P.WOOL_PURPLE,P.WOOL_MAGENTA],
+    iron_block:[P.IRON_BLOCK,P.STONE,P.SNOW],gold_block:[P.GOLD_BLOCK,P.RAW_GOLD,P.GOLD],diamond_block:[P.DIAMOND_BLOCK,P.DIAMOND,P.WATER_SURF],emerald_block:[P.EMERALD,P.OAK_LEAF_D,P.DIAMOND_BLOCK],lapis_block:[P.LAPIS,P.WOOL_BLUE,P.WATER_DEEP],coal_block:[P.COAL,P.OBSIDIAN,P.STONE_DARK],copper_block:[P.COPPER,P.BRICK,P.RAW_IRON],
+    glowstone:[P.GLOWSTONE,P.GLOWSTONE_D,P.TORCH_FLAME],netherrack:[P.NETHERRACK,P.SOUL_SAND,P.BRICK],soul_sand:[P.SOUL_SAND,P.DIRT_DARK,P.DIRT],end_stone:[P.END_STONE,P.SANDSTONE_DARK,P.SAND],purpur:[P.PURPUR,P.WOOL_MAGENTA,P.CLAY],farmland_dry:[P.DIRT_DARK,P.DIRT,P.SOUL_SAND],farmland_wet:[P.DIRT_DARK,P.OBSIDIAN,P.DIRT],path:[P.DIRT_LIGHT,P.DIRT,P.SAND_DARK],mycelium:[P.STONE,P.PURPUR,P.DIRT_DARK]
+  };
+  let seed=300;for(const [name,colors] of Object.entries(solids))textures[name]=dither(colors[0],colors[1],colors[2],seed++);
+  const ores={copper_ore:P.COPPER,lapis_ore:P.LAPIS,emerald_ore:P.EMERALD};for(const [name,color] of Object.entries(ores))textures[name]=ore(color,seed+=7);
+  const woods={birch:[P.BIRCH_PLANK,P.BIRCH_LOG,P.BIRCH_LOG_D,P.BIRCH_LEAF],spruce:[P.SPRUCE_PLANK,P.SPRUCE_LOG,P.DARK_LOG,P.SPRUCE_LEAF],jungle:[P.JUNGLE_PLANK,P.JUNGLE_LOG,P.DIRT_DARK,P.JUNGLE_LEAF],acacia:[P.ACACIA_PLANK,P.ACACIA_LOG,P.DIRT_DARK,P.ACACIA_LEAF],dark_oak:[P.DARK_PLANK,P.DARK_LOG,P.OBSIDIAN,P.DARK_LEAF]};
+  for(const [name,[plank,log,dark,leaf]] of Object.entries(woods)){textures[`${name}_planks`]=texture(t=>t.fill(plank).rect(0,5,16,1,dark).rect(0,11,16,1,dark).speckle(seed++,log,18));textures[`${name}_log_side`]=texture(t=>{t.fill(log);for(let x=1;x<16;x+=3)t.rect(x,0,1,16,dark);});textures[`${name}_log_top`]=texture(t=>t.rings(8,8,plank,dark).px(8,8,log));textures[`${name}_leaves`]=texture(t=>t.clear().noise(seed++,[leaf,dark],.63));}
+  const wool={white:P.WOOL_WHITE,black:P.WOOL_BLACK,red:P.WOOL_RED,blue:P.WOOL_BLUE,green:P.WOOL_GREEN,yellow:P.WOOL_YELLOW,orange:P.WOOL_ORANGE,purple:P.WOOL_PURPLE,cyan:P.WOOL_CYAN,lime:P.WOOL_LIME,pink:P.WOOL_PINK,gray:P.WOOL_GRAY,light_gray:P.WOOL_LIGHTGRAY,brown:P.WOOL_BROWN,magenta:P.WOOL_MAGENTA};for(const [name,color] of Object.entries(wool))textures[`${name}_wool`]=dither(color,P.UI_SLOT_DARK,P.UI_SLOT_LIGHT,seed++);
+  const utility=['crafting_table_side','crafting_table_front','furnace_front','furnace_lit','furnace_side','furnace_top','chest','ladder','bookshelf','tnt','pumpkin','melon','cactus_side','cactus_top','sugar_cane','torch','water_flow','lava_flow','sandstone_top','sandstone_bottom'];for(const name of utility)textures[name]=texture(t=>t.fill(name.includes('lava')||name==='furnace_lit'?P.LAVA:name.includes('water')?P.WATER:name.includes('cactus')||name==='sugar_cane'?P.OAK_LEAF:name==='tnt'?P.WOOL_RED:name==='furnace_front'||name==='furnace_side'||name==='furnace_top'?P.STONE:name==='bookshelf'?P.OAK_PLANK:P.OAK_PLANK).border(P.UI_SLOT_DARK,seed++%3).noise(seed++,[P.UI_SLOT_LIGHT,P.UI_SLOT_DARK],.13));
+  const plants=['oak_sapling','grass_tuft','dandelion','poppy','fern','dead_bush'];for(const name of plants)textures[name]=texture(t=>{t.clear();for(let y=3;y<16;y++)t.px(8+(y%3)-1,y,name==='poppy'?P.WOOL_RED:name==='dandelion'?P.WOOL_YELLOW:P.OAK_LEAF);});
+  return textures;
 }
