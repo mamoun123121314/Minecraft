@@ -45,7 +45,7 @@ The atlas inspection page is available at [`?atlas`](https://mamoun123121314.git
 
 ## Architecture
 
-Cubeworld ships as plain ES2022 modules with a vendored three.js renderer and no runtime build step. Original 16×16 procedural textures, 116 data-driven blocks, 237 registered items and 83 crafting recipes are generated into a nearest-neighbour texture atlas, deterministic world generation and meshing use module workers, simulation runs at a fixed 20 Hz, interface layers use DOM and CSS, audio is synthesized with WebAudio, and saves are stored in IndexedDB using run-length compression.
+Cubeworld ships as plain ES2022 modules with a vendored three.js renderer and no runtime build step. Original 16×16 procedural textures, 124 data-driven blocks, 245 registered items and 91 crafting recipes are generated into a nearest-neighbour texture atlas, deterministic world generation and meshing use module workers, simulation runs at a fixed 20 Hz, interface layers use DOM and CSS, audio is synthesized with WebAudio, and saves are stored in IndexedDB using run-length compression.
 
 ## Current Java fidelity baseline
 
@@ -53,4 +53,4 @@ Cubeworld targets **Current Java Edition 26.1.2** for factual mechanics and regi
 
 ## Verification
 
-CI parses every module, scans for runtime networking and binary assets, validates the frozen palette, launches a headless browser, captures day/night/atlas screenshots, and runs deterministic tests for physics, mining, lighting, crafting, survival, combat, containers, fluids, farming, block states, and save round trips.
+CI parses every module, scans for runtime networking and binary assets, validates the frozen palette, launches a headless browser, captures day/night/atlas screenshots, and runs deterministic tests for physics, mining, lighting, crafting, survival, combat, containers, redstone, fluids, farming, block states, and save round trips.

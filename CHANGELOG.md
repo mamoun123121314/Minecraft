@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.17.0 — Deterministic Redstone
+- Added levers, stone buttons, redstone blocks, torches, dust, repeaters, observers, lamps, and powered-door behavior with eight crafting recipes.
+- Added 0–15 dust propagation, disconnection/source-removal rebuilds, directional repeater output, configurable delay scheduling, two-tick observer pulses, and fixed-tick device updates.
+- Added original device textures, horizontal dust geometry, lamp lit-state rendering, placement facing, world-edit notifications, live interaction/remeshing, and deterministic redstone CI.
+
 ## 1.16.0 — Interactive Containers
 - Replaced display-only inventory/chest controls with cursor pickup, swapping, merging, right-click splitting/single placement, shift-click transfers, and overflow-safe movement.
 - Added consumable 2×2 crafting outputs, safe item return on close, usable furnace input/fuel/output slots, output merging, fuel gating, and full-output protection.

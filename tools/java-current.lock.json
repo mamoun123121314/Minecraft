@@ -88,6 +88,7 @@
         "lapis_block",
         "lapis_ore",
         "lava",
+        "lever",
         "light_gray_wool",
         "lime_wool",
         "magenta_wool",
@@ -105,6 +106,7 @@
         "oak_sapling",
         "oak_slab",
         "oak_stairs",
+        "observer",
         "obsidian",
         "orange_wool",
         "pink_wool",
@@ -116,7 +118,11 @@
         "purpur_block",
         "red_sand",
         "red_wool",
+        "redstone_block",
+        "redstone_lamp",
         "redstone_ore",
+        "redstone_torch",
+        "redstone_wire",
         "sand",
         "sandstone",
         "snow_block",
@@ -126,6 +132,7 @@
         "spruce_planks",
         "stone",
         "stone_bricks",
+        "stone_button",
         "sugar_cane",
         "tnt",
         "torch",
@@ -579,7 +586,6 @@
         "lava_cauldron",
         "leaf_litter",
         "lectern",
-        "lever",
         "light",
         "light_blue_banner",
         "light_blue_bed",
@@ -701,7 +707,6 @@
         "oak_wall_hanging_sign",
         "oak_wall_sign",
         "oak_wood",
-        "observer",
         "ochre_froglight",
         "open_eyeblossom",
         "orange_banner",
@@ -910,11 +915,7 @@
         "red_terracotta",
         "red_tulip",
         "red_wall_banner",
-        "redstone_block",
-        "redstone_lamp",
-        "redstone_torch",
         "redstone_wall_torch",
-        "redstone_wire",
         "reinforced_deepslate",
         "repeater",
         "repeating_command_block",
@@ -992,7 +993,6 @@
         "stone_brick_slab",
         "stone_brick_stairs",
         "stone_brick_wall",
-        "stone_button",
         "stone_pressure_plate",
         "stone_slab",
         "stone_stairs",
@@ -1192,7 +1192,7 @@
         "zombie_head",
         "zombie_wall_head"
       ],
-      "percent": 9.67
+      "percent": 10.27
     },
     "items": {
       "implemented": [
@@ -1334,6 +1334,7 @@
         "leather_chestplate",
         "leather_helmet",
         "leather_leggings",
+        "lever",
         "light_gray_wool",
         "lime_wool",
         "magenta_wool",
@@ -1369,6 +1370,7 @@
         "oak_slab",
         "oak_stairs",
         "oak_trapdoor",
+        "observer",
         "obsidian",
         "orange_wool",
         "paper",
@@ -1387,7 +1389,10 @@
         "red_sand",
         "red_wool",
         "redstone",
+        "redstone_block",
+        "redstone_lamp",
         "redstone_ore",
+        "redstone_torch",
         "rotten_flesh",
         "sand",
         "sandstone",
@@ -1403,6 +1408,7 @@
         "stone",
         "stone_axe",
         "stone_bricks",
+        "stone_button",
         "stone_hoe",
         "stone_pickaxe",
         "stone_shovel",
@@ -1994,7 +2000,6 @@
         "leaf_litter",
         "leather_horse_armor",
         "lectern",
-        "lever",
         "light",
         "light_blue_banner",
         "light_blue_bed",
@@ -2157,7 +2162,6 @@
         "oak_pressure_plate",
         "oak_shelf",
         "oak_wood",
-        "observer",
         "ocelot_spawn_egg",
         "ochre_froglight",
         "ominous_bottle",
@@ -2362,9 +2366,6 @@
         "red_stained_glass_pane",
         "red_terracotta",
         "red_tulip",
-        "redstone_block",
-        "redstone_lamp",
-        "redstone_torch",
         "reinforced_deepslate",
         "repeater",
         "repeating_command_block",
@@ -2472,7 +2473,6 @@
         "stone_brick_slab",
         "stone_brick_stairs",
         "stone_brick_wall",
-        "stone_button",
         "stone_pressure_plate",
         "stone_slab",
         "stone_spear",
@@ -2705,7 +2705,7 @@
         "zombie_villager_spawn_egg",
         "zombified_piglin_spawn_egg"
       ],
-      "percent": 15.14
+      "percent": 15.54
     },
     "entities": {
       "implemented": [
@@ -2944,9 +2944,9 @@
       "percent": 7.69
     },
     "recipes": {
-      "implemented": 83,
+      "implemented": 91,
       "reference": 887,
-      "percent": 9.36
+      "percent": 10.26
     }
   },
   "hashes": {
@@ -3933,6 +3933,69 @@
       "filterLight": 0,
       "boundingBox": "block",
       "material": "mineable/axe"
+    },
+    "redstone_wire": {
+      "hardness": 0,
+      "diggable": true,
+      "transparent": true,
+      "emitLight": 0,
+      "filterLight": 0,
+      "boundingBox": "empty",
+      "material": "default"
+    },
+    "redstone_torch": {
+      "hardness": 0,
+      "diggable": true,
+      "transparent": true,
+      "emitLight": 7,
+      "filterLight": 0,
+      "boundingBox": "empty",
+      "material": "default"
+    },
+    "redstone_lamp": {
+      "hardness": 0.3,
+      "diggable": true,
+      "transparent": false,
+      "emitLight": 0,
+      "filterLight": 15,
+      "boundingBox": "block",
+      "material": "default"
+    },
+    "lever": {
+      "hardness": 0.5,
+      "diggable": true,
+      "transparent": true,
+      "emitLight": 0,
+      "filterLight": 0,
+      "boundingBox": "empty",
+      "material": "default"
+    },
+    "stone_button": {
+      "hardness": 0.5,
+      "diggable": true,
+      "transparent": true,
+      "emitLight": 0,
+      "filterLight": 0,
+      "boundingBox": "empty",
+      "material": "mineable/pickaxe"
+    },
+    "observer": {
+      "hardness": 3,
+      "diggable": true,
+      "transparent": false,
+      "emitLight": 0,
+      "filterLight": 15,
+      "boundingBox": "block",
+      "material": "mineable/pickaxe"
+    },
+    "redstone_block": {
+      "hardness": 5,
+      "diggable": true,
+      "transparent": false,
+      "emitLight": 0,
+      "filterLight": 15,
+      "boundingBox": "block",
+      "material": "mineable/pickaxe"
     },
     "wheat": {
       "hardness": 0,
