@@ -19,7 +19,7 @@ Click the game to begin. Movement and survival controls arrive in their gated ph
 | 4 | Player physics and controls | ✅ |
 | 5 | Block interaction and hotbar | ✅ |
 | 6 | Lighting and atmosphere | ✅ |
-| 7 | Inventory and crafting | ⬜ |
+| 7 | Inventory and crafting | ✅ |
 | 8 | Survival and mobs | ⬜ |
 | 9 | Persistence, weather, audio, and polish | ⬜ |
 

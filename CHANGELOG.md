@@ -20,3 +20,6 @@
 
 ## Phase 6 — Lighting and Atmosphere
 - Added a 24,000-tick sky cycle, gradient dome, sun, phased moon, 1,500 stars, scrolling clouds, synchronized fog, BFS light propagation, and exact two-channel brightness mapping.
+
+## Phase 7 — Inventory and Crafting
+- Added item stacks, recipe matching, inventory crafting, furnace fuel and smelting, chest storage panels, tool recipes, and interactive container UI.
