@@ -1,0 +1,2 @@
+import * as THREE from '../../vendor/three.module.js';
+export function createHighlight(scene){const geometry=new THREE.EdgesGeometry(new THREE.BoxGeometry(1.004,1.004,1.004));const box=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0x000000,depthTest:true}));box.visible=false;scene.add(box);return{update(target){box.visible=!!target;if(target)box.position.set(target.pos.x+.5,target.pos.y+.5,target.pos.z+.5);},box};}
