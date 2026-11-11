@@ -1,0 +1,21 @@
+import * as THREE from '../../vendor/three.module.js';
+import { P } from '../../data/palette.js';
+import { seeded } from '../core/rng.js';
+import { lerpHex, hexToRgb } from '../core/math.js';
+
+const keyframes=[
+  {t:0,z:P.SKY_ZENITH,h:P.SKY_HORIZON},{t:6000,z:P.SKY_ZENITH,h:P.SKY_HORIZON},
+  {t:12000,z:'#6E7FC4',h:P.SKY_DUSK},{t:14000,z:'#1B2A55',h:'#6A4A6E'},
+  {t:18000,z:P.SKY_NIGHT,h:'#101028'},{t:23000,z:'#2A3A6A',h:'#E8A66A'},{t:24000,z:P.SKY_ZENITH,h:P.SKY_HORIZON}
+];
+function colorsAt(ticks){let a=keyframes[0],b=keyframes.at(-1);for(let i=0;i<keyframes.length-1;i+=1)if(ticks>=keyframes[i].t&&ticks<=keyframes[i+1].t){a=keyframes[i];b=keyframes[i+1];break;}const f=(ticks-a.t)/(b.t-a.t||1);return{zenith:lerpHex(a.z,b.z,f),horizon:lerpHex(a.h,b.h,f)};}
+function discTexture(color,phase=0){const canvas=document.createElement('canvas');canvas.width=canvas.height=32;const ctx=canvas.getContext('2d');ctx.fillStyle=color;ctx.beginPath();ctx.arc(16,16,13,0,Math.PI*2);ctx.fill();if(phase){ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(16+(phase-4)*3,16,12,0,Math.PI*2);ctx.fill();}const texture=new THREE.CanvasTexture(canvas);texture.magFilter=THREE.NearestFilter;texture.minFilter=THREE.NearestFilter;texture.generateMipmaps=false;return texture;}
+export function createSky(scene,fog){
+  const uniforms={zenith:{value:new THREE.Color(P.SKY_ZENITH)},horizon:{value:new THREE.Color(P.SKY_HORIZON)}};
+  const dome=new THREE.Mesh(new THREE.SphereGeometry(500,24,12),new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,uniforms,vertexShader:'varying vec3 v;void main(){v=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec3 v;uniform vec3 zenith;uniform vec3 horizon;void main(){float f=pow(max(normalize(v).y,0.),.62);gl_FragColor=vec4(mix(horizon,zenith,f),1.);}'}));scene.add(dome);
+  const sun=new THREE.Sprite(new THREE.SpriteMaterial({map:discTexture(P.SUN),fog:false,depthTest:false}));sun.scale.set(30,30,1);scene.add(sun);
+  const moon=new THREE.Sprite(new THREE.SpriteMaterial({map:discTexture(P.MOON,2),fog:false,depthTest:false,transparent:true}));moon.scale.set(20,20,1);scene.add(moon);
+  const random=seeded('stars'),points=new Float32Array(1500*3);for(let i=0;i<1500;i+=1){const theta=random()*Math.PI*2,phi=random()*Math.PI*.48,r=420;points[i*3]=Math.cos(theta)*Math.cos(phi)*r;points[i*3+1]=Math.sin(phi)*r;points[i*3+2]=Math.sin(theta)*Math.cos(phi)*r;}const starGeometry=new THREE.BufferGeometry();starGeometry.setAttribute('position',new THREE.BufferAttribute(points,3));const starMaterial=new THREE.PointsMaterial({color:P.STAR,size:1.25,transparent:true,opacity:0,depthWrite:false,fog:false});scene.add(new THREE.Points(starGeometry,starMaterial));
+  const cloudCanvas=document.createElement('canvas');cloudCanvas.width=cloudCanvas.height=256;const context=cloudCanvas.getContext('2d');context.fillStyle=P.CLOUD;const cloudRandom=seeded('clouds');for(let i=0;i<90;i+=1)context.fillRect(Math.floor(cloudRandom()*21)*12,Math.floor(cloudRandom()*21)*12,12*(1+Math.floor(cloudRandom()*3)),12);const cloudTexture=new THREE.CanvasTexture(cloudCanvas);cloudTexture.magFilter=THREE.NearestFilter;cloudTexture.minFilter=THREE.NearestFilter;cloudTexture.wrapS=cloudTexture.wrapT=THREE.RepeatWrapping;const clouds=new THREE.Mesh(new THREE.PlaneGeometry(360,360),new THREE.MeshBasicMaterial({map:cloudTexture,transparent:true,opacity:.8,alphaTest:.2,depthWrite:false,side:THREE.DoubleSide,fog:false}));clouds.rotation.x=-Math.PI/2;clouds.position.y=192;scene.add(clouds);
+  return{update(ticks,daylight,camera){dome.position.copy(camera.position);const angle=(ticks/24000)*Math.PI*2-Math.PI/2;sun.position.set(camera.position.x+Math.cos(angle)*100,camera.position.y+Math.sin(angle)*100,camera.position.z);moon.position.set(camera.position.x-Math.cos(angle)*100,camera.position.y-Math.sin(angle)*100,camera.position.z);const c=colorsAt(ticks);uniforms.zenith.value.set(c.zenith);uniforms.horizon.value.set(c.horizon);fog.color.set(c.horizon);starMaterial.opacity=Math.max(0,1-daylight*1.3);cloudTexture.offset.x=(ticks*.003)/256;clouds.position.x=camera.position.x;clouds.position.z=camera.position.z;clouds.material.color.setRGB(.16+.84*daylight,.16+.84*daylight,.24+.76*daylight);return c;},sun,moon,clouds,stars:starMaterial};
+}

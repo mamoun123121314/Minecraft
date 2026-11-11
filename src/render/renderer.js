@@ -1,11 +1,13 @@
 import * as THREE from '../../vendor/three.module.js';
 import { buildAtlas } from './atlas.js';
+import { createSky } from './sky.js';
 
 
 export async function createTerrainScene(game) {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x78a7ff);
   scene.fog = new THREE.Fog(0xc6daff, 28, 80);
+  const sky=createSky(scene,scene.fog);
   const camera = new THREE.PerspectiveCamera(70, innerWidth / innerHeight, 0.05, 1000);
   const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -43,5 +45,5 @@ export async function createTerrainScene(game) {
   function resize() { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); }
   addEventListener('resize', resize, { passive: true });
   requestAnimationFrame(render);
-  return { renderer, scene, camera, geometry, physicsBlocks, meshDuration: result.duration, terrainHash: generated.hash, biomeData: generated.biomes, drawCalls: () => renderer.info.render.calls };
+  return { renderer, scene, camera, geometry, physicsBlocks, sky, meshDuration: result.duration, terrainHash: generated.hash, biomeData: generated.biomes, drawCalls: () => renderer.info.render.calls };
 }

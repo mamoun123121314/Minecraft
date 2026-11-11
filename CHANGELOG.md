@@ -17,3 +17,6 @@
 
 ## Phase 5 — Block Interaction
 - Added DDA-style reach raycasting, selection outlines, timed mining, mutable blocks, nine-slot hotbar, hearts, and crosshair.
+
+## Phase 6 — Lighting and Atmosphere
+- Added a 24,000-tick sky cycle, gradient dome, sun, phased moon, 1,500 stars, scrolling clouds, synchronized fog, BFS light propagation, and exact two-channel brightness mapping.

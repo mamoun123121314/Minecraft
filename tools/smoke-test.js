@@ -38,6 +38,9 @@ try {
   if (!result.canvas || !result.fps || result.variation <= 8) errors.push(`Invalid rendered scene: ${JSON.stringify(result)}`);
   await mkdir('artifacts', { recursive: true });
   await page.screenshot({ path: 'artifacts/screenshot.png' });
+  await page.goto(`http://127.0.0.1:${port}/?time=18000`, { waitUntil: 'networkidle0' });
+  await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 5000 });
+  await page.screenshot({ path: 'artifacts/night.png' });
   await page.goto(`http://127.0.0.1:${port}/?atlas`, { waitUntil: 'networkidle0' });
   await page.waitForFunction(() => window.__cubeworld?.ready === true && window.__cubeworld?.atlasCount >= 20, { timeout: 5000 });
   const atlasResult = await page.evaluate(() => ({ count: document.querySelectorAll('.atlas-grid figure').length, sizes: [...document.querySelectorAll('.atlas-grid canvas')].every((canvas) => canvas.width === 16 && canvas.height === 16) }));

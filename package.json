@@ -9,7 +9,8 @@
     "smoke": "node tools/smoke-test.js",
     "test": "npm run check && npm run smoke",
     "physics": "node tools/physics-test.js",
-    "mining": "node tools/mining-test.js"
+    "mining": "node tools/mining-test.js",
+    "lighting": "node tools/lighting-test.js"
   },
   "devDependencies": {
     "acorn": "8.14.0",
