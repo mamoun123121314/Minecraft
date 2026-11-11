@@ -1,4 +1,4 @@
-import { CHUNK_HEIGHT, blockIndex } from '../world/chunk.js';
+import { CHUNK_MIN_Y, CHUNK_MAX_Y, blockIndex } from '../world/chunk.js';
 
 export const PLAYER_CONSTANTS = Object.freeze({
   width: 0.6, height: 1.8, sneakHeight: 1.5, eyeHeight: 1.62, sneakEyeHeight: 1.27,
@@ -8,7 +8,7 @@ export const PLAYER_CONSTANTS = Object.freeze({
 const blockAt=(blocks,x,y,z)=>typeof blocks.getBlock==='function'?blocks.getBlock(x,y,z):blocks[blockIndex(x,y,z)];
 const solidAt = (blocks, x, y, z) => {
   const bx=Math.floor(x), by=Math.floor(y), bz=Math.floor(z);
-  if(by<0||by>=CHUNK_HEIGHT)return by<0;
+  if(by<CHUNK_MIN_Y||by>CHUNK_MAX_Y)return false;
   const id=blockAt(blocks,bx,by,bz);
   return id!==0 && id!==5 && id!==15;
 };
@@ -18,7 +18,7 @@ export class Player {
     this.velocity={x:0,y:0,z:0}; this.yaw=0; this.pitch=0; this.onGround=false; this.flying=false; this.sprinting=false; this.sneaking=false;
     this.keys=new Set(); this.lastSpace=0; this.bindInput(); this.updateCamera();
   }
-  findSpawn(){ for(let y=CHUNK_HEIGHT-2;y>1;y-=1) if(solidAt(this.blocks,8.5,y,8.5)) return y+1.01; return 90; }
+  findSpawn(){ for(let y=CHUNK_MAX_Y-1;y>CHUNK_MIN_Y;y-=1) if(solidAt(this.blocks,8.5,y,8.5)) return y+1.01; return 90; }
   bindInput(){
     addEventListener('keydown',(e)=>{ this.keys.add(e.code); if(e.code==='Space'){const now=performance.now();if(now-this.lastSpace<300)this.flying=!this.flying;this.lastSpace=now;} if(e.code==='ControlLeft')this.sprinting=true; });
     addEventListener('keyup',(e)=>{this.keys.delete(e.code);if(e.code==='ControlLeft')this.sprinting=false;});
