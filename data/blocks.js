@@ -17,6 +17,7 @@ for(const color of ['white','black','red','blue','green','yellow','orange','purp
 const utility={crafting_table:'crafting_table_side',furnace:'furnace_front',lit_furnace:'furnace_lit',chest:'chest',ladder:'ladder',bookshelf:'bookshelf',tnt:'tnt',pumpkin:'pumpkin',melon:'melon',cactus:'cactus_side',sugar_cane:'sugar_cane',torch:'torch'};
 for(const [name,texture] of Object.entries(utility))entries.push(block(id++,name,texture,{opaque:!['ladder','sugar_cane','torch'].includes(name),solid:!['ladder','sugar_cane','torch'].includes(name),renderLayer:['ladder','sugar_cane','torch'].includes(name)?'cutout':'opaque',model:name==='sugar_cane'?'cross':name==='torch'?'torch':name==='ladder'?'flat':'cube',light:name==='torch'?14:0}));
 for(const [name,texture] of Object.entries({oak_sapling:'oak_sapling',grass_tuft:'grass_tuft',dandelion:'dandelion',poppy:'poppy',fern:'fern',dead_bush:'dead_bush'}))entries.push(block(id++,name,texture,{solid:false,opaque:false,hardness:0,renderLayer:'cutout',model:'cross'}));
+for(const [name,texture,model] of [['oak_slab','oak_planks','slab'],['oak_stairs','oak_planks','stairs'],['oak_fence','oak_planks','fence'],['cobblestone_wall','cobblestone','wall'],['oak_door','oak_planks','door']])entries.push(block(id++,name,texture,{opaque:false,hardness:2,renderLayer:'cutout',model}));
 export const BLOCKS=Object.freeze(Object.fromEntries(entries.map(value=>[value.name,value])));
 export const BLOCK_BY_ID=Object.freeze(Object.fromEntries(entries.map(value=>[value.id,value])));
 export const BLOCK_COUNT=entries.length;
