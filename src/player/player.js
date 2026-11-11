@@ -28,7 +28,7 @@ export class Player {
   }
   collides(x,y,z){
     const half=PLAYER_CONSTANTS.width/2, height=this.sneaking?PLAYER_CONSTANTS.sneakHeight:PLAYER_CONSTANTS.height;
-    for(const px of [x-half,x+half])for(const pz of [z-half,z+half])for(const py of [y+0.01,y+height-0.01])if(solidAt(this.blocks,px,py,pz)){const state=typeof this.blocks.getBlockState==='function'?this.blocks.getBlockState(bx,by,bz):null;if(pointCollides(blockAt(this.blocks,bx,by,bz),state,px-bx,py-by,pz-bz))return true;}
+    for(const px of [x-half,x+half])for(const pz of [z-half,z+half])for(const py of [y+0.01,y+height-0.01])if(solidAt(this.blocks,px,py,pz)){const bx=Math.floor(px),by=Math.floor(py),bz=Math.floor(pz),state=typeof this.blocks.getBlockState==='function'?this.blocks.getBlockState(bx,by,bz):null;if(pointCollides(blockAt(this.blocks,bx,by,bz),state,px-bx,py-by,pz-bz))return true;}
     return false;
   }
   moveAxis(axis,amount){

@@ -6,6 +6,7 @@ import { collisionBoxes, pointCollides } from '../src/world/shapes.js';
 import { meshChunk } from '../src/world/mesher.js';
 import { CHUNK_VOLUME, blockIndex } from '../src/world/chunk.js';
 import { MiningSystem } from '../src/player/mining.js';
+import { Player } from '../src/player/player.js';
 
 function fixture() { const world = new WorldMap(12); world.addChunk(0, 0, new Uint16Array(CHUNK_VOLUME)); return { world, player: { position: { x: 12, y: 80, z: 12 }, yaw: 0, pitch: 0 } }; }
 for (const wood of ['oak', 'birch', 'spruce', 'jungle', 'acacia', 'dark_oak']) for (const model of ['slab', 'stairs', 'fence', 'fence_gate', 'door', 'trapdoor']) assert.ok(BLOCKS[`${wood}_${model}`], `Missing ${wood}_${model}`);
@@ -75,6 +76,14 @@ for (const wood of ['oak', 'birch', 'spruce', 'jungle', 'acacia', 'dark_oak']) f
   assert.equal(result.drop, null);
   assert.equal(world.getBlock(9, 64, 9), 0);
   assert.equal(world.getBlock(9, 65, 9), 0);
+}
+
+{
+  const { world } = fixture();
+  world.setBlock(1, 64, 1, BLOCKS.oak_slab.id, { half: 'bottom' });
+  const collision = { blocks: world, sneaking: false };
+  assert.equal(Player.prototype.collides.call(collision, 1.5, 64.25, 1.5), true);
+  assert.equal(Player.prototype.collides.call(collision, 1.5, 64.75, 1.5), false, 'player can occupy space above a bottom slab');
 }
 
 console.log('Block-family checks passed: six woods, slab merging/half states, waterlogging, doors, trapdoors, gates, collision boxes, fence connections, models, and synchronized breaking.');
