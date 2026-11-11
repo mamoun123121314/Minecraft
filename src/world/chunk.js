@@ -1,5 +1,5 @@
 export const CHUNK_SIZE = 16;
-export const CHUNK_HEIGHT = 16;
+export const CHUNK_HEIGHT = 128;
 export const CHUNK_VOLUME = CHUNK_SIZE * CHUNK_HEIGHT * CHUNK_SIZE;
 export const blockIndex = (x, y, z) => y * CHUNK_SIZE * CHUNK_SIZE + z * CHUNK_SIZE + x;
 

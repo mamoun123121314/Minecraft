@@ -8,7 +8,8 @@ const FACES = [
   { normal: [0,0,1], shade: 0.8, key: 'side', corners: [[1,0,1],[0,0,1],[0,1,1],[1,1,1]] },
   { normal: [0,0,-1], shade: 0.8, key: 'side', corners: [[0,0,0],[1,0,0],[1,1,0],[0,1,0]] }
 ];
-const IDS = { 1: { top: 'grass_top', bottom: 'dirt', side: 'grass_side' }, 2: { top: 'dirt', bottom: 'dirt', side: 'dirt' }, 3: { top: 'stone', bottom: 'stone', side: 'stone' }, 4: { top: 'bedrock', bottom: 'bedrock', side: 'bedrock' } };
+const single=(name)=>({top:name,bottom:name,side:name});
+const IDS={1:{top:'grass_top',bottom:'dirt',side:'grass_side'},2:single('dirt'),3:single('stone'),4:single('bedrock'),5:single('water_still'),6:single('sand'),7:single('gravel'),8:single('coal_ore'),9:single('iron_ore'),10:single('diamond_ore'),12:single('snow_block'),13:single('obsidian'),14:{top:'oak_log_top',bottom:'oak_log_top',side:'oak_log_side'},15:single('oak_leaves')};
 const INDEX_ORDER = [0,1,2,0,2,3];
 const isSolid = (blocks, x, y, z) => x >= 0 && x < CHUNK_SIZE && y >= 0 && y < CHUNK_HEIGHT && z >= 0 && z < CHUNK_SIZE && blocks[blockIndex(x,y,z)] !== 0;
 
