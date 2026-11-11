@@ -945,6 +945,69 @@ export const JAVA_BLOCK_PROPERTIES=Object.freeze({
     "boundingBox": "block",
     "material": "mineable/axe"
   },
+  "redstone_wire": {
+    "hardness": 0,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "redstone_torch": {
+    "hardness": 0,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 7,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "redstone_lamp": {
+    "hardness": 0.3,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 15,
+    "boundingBox": "block",
+    "material": "default"
+  },
+  "lever": {
+    "hardness": 0.5,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "stone_button": {
+    "hardness": 0.5,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "mineable/pickaxe"
+  },
+  "observer": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 15,
+    "boundingBox": "block",
+    "material": "mineable/pickaxe"
+  },
+  "redstone_block": {
+    "hardness": 5,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 15,
+    "boundingBox": "block",
+    "material": "mineable/pickaxe"
+  },
   "wheat": {
     "hardness": 0,
     "diggable": true,
@@ -1323,6 +1386,24 @@ export const JAVA_ITEM_PROPERTIES=Object.freeze({
     "stackSize": 64
   },
   "oak_door": {
+    "stackSize": 64
+  },
+  "redstone_torch": {
+    "stackSize": 64
+  },
+  "redstone_lamp": {
+    "stackSize": 64
+  },
+  "lever": {
+    "stackSize": 64
+  },
+  "stone_button": {
+    "stackSize": 64
+  },
+  "observer": {
+    "stackSize": 64
+  },
+  "redstone_block": {
     "stackSize": 64
   },
   "wheat": {
