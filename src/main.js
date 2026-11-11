@@ -1,6 +1,10 @@
+import { showAtlasDebug } from './render/atlas.js';
 import * as THREE from '../vendor/three.module.js';
 
 const game = document.querySelector('#game');
+if (new URLSearchParams(location.search).has('atlas')) {
+  showAtlasDebug(game);
+} else {
 const loading = document.querySelector('#loading');
 const fpsLabel = document.querySelector('#fps');
 const scene = new THREE.Scene();
@@ -43,3 +47,4 @@ addEventListener('resize', resize, { passive: true });
 window.__cubeworld = { ready: true, renderer, phase: 0 };
 loading.classList.add('hidden');
 requestAnimationFrame(frame);
+}
