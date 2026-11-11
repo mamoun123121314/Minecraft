@@ -26,3 +26,6 @@
 
 ## Phase 8 — Survival and Mobs
 - Added health, hunger, exhaustion, fall and mob damage, XP, death drops, respawning, passive and hostile mobs, nighttime aggro, and death UI.
+
+## Phase 9 — Persistence and Polish
+- Added IndexedDB world saves with RLE, local settings, synthesized audio, particles, rain and snow, pause and settings menus, autosave, and populated F3 diagnostics.
