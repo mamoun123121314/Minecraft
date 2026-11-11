@@ -6,15 +6,15 @@ Baseline: **Java 26.1.2** from [PrismarineJS minecraft-data](https://github.com/
 
 | Registry | Current Java | Cubeworld overlap | Coverage |
 |---|---:|---:|---:|
-| Blocks | 1168 | 120 | 10.27% |
-| Items | 1506 | 234 | 15.54% |
-| Recipes | 887 | 91 | 10.26% |
+| Blocks | 1168 | 152 | 13.01% |
+| Items | 1506 | 265 | 17.6% |
+| Recipes | 887 | 123 | 13.87% |
 | Entities | 157 | 9 | 5.73% |
 | Biomes | 65 | 5 | 7.69% |
 
 ## Behavior coverage
 
-Registry overlap is not behavior parity. Cubeworld 1.17.0 remains approximately **21% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Redstone currently covers edited dust networks and a small device subset; it lacks Java's complete update order, quasi-connectivity, pistons, comparators, tripwire, all connection shapes and many powered blocks. Major gaps remain in entities, dimensions, structures, progression and the full block/item catalogs.
+Registry overlap is not behavior parity. Cubeworld 1.18.0 remains approximately **23% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families now have real placement, model and collision states, but stairs do not yet calculate Java's inner/outer corner shapes and raycast selection still uses full voxel bounds. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
 
 ## Fidelity priorities
 

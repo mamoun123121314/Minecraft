@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.18.0 — Wood Block Families
+- Added 32 slab, stair, fence, fence-gate, door and trapdoor variants across six wood families, with 32 recipes and calibrated Java properties.
+- Added top/bottom/double slabs, inverted stairs, waterlogging, open/half/facing states, synchronized two-half doors and double-slab loot.
+- Replaced full-cube physics for shaped blocks with collision boxes, added live fence/wall connections and state-aware geometry, and resolved manual/redstone door interaction conflicts.
+
 ## 1.17.0 — Deterministic Redstone
 - Added levers, stone buttons, redstone blocks, torches, dust, repeaters, observers, lamps, and powered-door behavior with eight crafting recipes.
 - Added 0–15 dust propagation, disconnection/source-removal rebuilds, directional repeater output, configurable delay scheduling, two-tick observer pulses, and fixed-tick device updates.

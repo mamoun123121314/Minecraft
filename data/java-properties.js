@@ -945,6 +945,294 @@ export const JAVA_BLOCK_PROPERTIES=Object.freeze({
     "boundingBox": "block",
     "material": "mineable/axe"
   },
+  "oak_fence_gate": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "oak_trapdoor": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "birch_slab": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "birch_stairs": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "birch_fence": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "birch_fence_gate": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "birch_door": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "birch_trapdoor": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "spruce_slab": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "spruce_stairs": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "spruce_fence": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "spruce_fence_gate": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "spruce_door": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "spruce_trapdoor": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "jungle_slab": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "jungle_stairs": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "jungle_fence": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "jungle_fence_gate": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "jungle_door": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "jungle_trapdoor": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "acacia_slab": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "acacia_stairs": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "acacia_fence": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "acacia_fence_gate": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "acacia_door": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "acacia_trapdoor": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "dark_oak_slab": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "dark_oak_stairs": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "dark_oak_fence": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "dark_oak_fence_gate": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "dark_oak_door": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "dark_oak_trapdoor": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
   "redstone_wire": {
     "hardness": 0,
     "diggable": true,
@@ -1388,6 +1676,102 @@ export const JAVA_ITEM_PROPERTIES=Object.freeze({
   "oak_door": {
     "stackSize": 64
   },
+  "oak_fence_gate": {
+    "stackSize": 64
+  },
+  "oak_trapdoor": {
+    "stackSize": 64
+  },
+  "birch_slab": {
+    "stackSize": 64
+  },
+  "birch_stairs": {
+    "stackSize": 64
+  },
+  "birch_fence": {
+    "stackSize": 64
+  },
+  "birch_fence_gate": {
+    "stackSize": 64
+  },
+  "birch_door": {
+    "stackSize": 64
+  },
+  "birch_trapdoor": {
+    "stackSize": 64
+  },
+  "spruce_slab": {
+    "stackSize": 64
+  },
+  "spruce_stairs": {
+    "stackSize": 64
+  },
+  "spruce_fence": {
+    "stackSize": 64
+  },
+  "spruce_fence_gate": {
+    "stackSize": 64
+  },
+  "spruce_door": {
+    "stackSize": 64
+  },
+  "spruce_trapdoor": {
+    "stackSize": 64
+  },
+  "jungle_slab": {
+    "stackSize": 64
+  },
+  "jungle_stairs": {
+    "stackSize": 64
+  },
+  "jungle_fence": {
+    "stackSize": 64
+  },
+  "jungle_fence_gate": {
+    "stackSize": 64
+  },
+  "jungle_door": {
+    "stackSize": 64
+  },
+  "jungle_trapdoor": {
+    "stackSize": 64
+  },
+  "acacia_slab": {
+    "stackSize": 64
+  },
+  "acacia_stairs": {
+    "stackSize": 64
+  },
+  "acacia_fence": {
+    "stackSize": 64
+  },
+  "acacia_fence_gate": {
+    "stackSize": 64
+  },
+  "acacia_door": {
+    "stackSize": 64
+  },
+  "acacia_trapdoor": {
+    "stackSize": 64
+  },
+  "dark_oak_slab": {
+    "stackSize": 64
+  },
+  "dark_oak_stairs": {
+    "stackSize": 64
+  },
+  "dark_oak_fence": {
+    "stackSize": 64
+  },
+  "dark_oak_fence_gate": {
+    "stackSize": 64
+  },
+  "dark_oak_door": {
+    "stackSize": 64
+  },
+  "dark_oak_trapdoor": {
+    "stackSize": 64
+  },
   "redstone_torch": {
     "stackSize": 64
   },
@@ -1777,9 +2161,6 @@ export const JAVA_ITEM_PROPERTIES=Object.freeze({
   },
   "white_bed": {
     "stackSize": 1
-  },
-  "oak_trapdoor": {
-    "stackSize": 64
   },
   "minecart": {
     "stackSize": 1
