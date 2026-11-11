@@ -20,6 +20,7 @@ export async function createTerrainScene(game) {
     worldWorker.postMessage({ seed: 'Cubeworld', cx: 0, cz: 0 });
   });
   worldWorker.terminate();
+  const physicsBlocks = generated.blocks.slice();
   const worker = new Worker(new URL('../workers/mesh.worker.js', import.meta.url), { type: 'module' });
   const result = await new Promise((resolve, reject) => {
     worker.onerror = reject;
@@ -37,26 +38,10 @@ export async function createTerrainScene(game) {
   const material = new THREE.MeshBasicMaterial({ map: atlas, vertexColors: true });
   const terrain = new THREE.Mesh(geometry, material);
   scene.add(terrain);
-  camera.position.set(40, 92, 40);
-  camera.lookAt(8, 62, 8);
-  let yaw = Math.PI / 4, pitch = 0.48, distance = 55;
-  renderer.domElement.addEventListener('pointerdown', (event) => {
-    const startX = event.clientX, startY = event.clientY, startYaw = yaw, startPitch = pitch;
-    const move = (next) => { yaw = startYaw - (next.clientX - startX) * 0.008; pitch = Math.max(0.15, Math.min(1.35, startPitch + (next.clientY - startY) * 0.006)); };
-    const up = () => { removeEventListener('pointermove', move); removeEventListener('pointerup', up); };
-    addEventListener('pointermove', move); addEventListener('pointerup', up);
-  });
-  renderer.domElement.addEventListener('wheel', (event) => { distance = Math.max(20, Math.min(90, distance + event.deltaY * 0.02)); }, { passive: true });
-  const center = new THREE.Vector3(8, 61, 8);
-  function render() {
-    const horizontal = Math.cos(pitch) * distance;
-    camera.position.set(center.x + Math.sin(yaw) * horizontal, center.y + Math.sin(pitch) * distance, center.z + Math.cos(yaw) * horizontal);
-    camera.lookAt(center);
-    renderer.render(scene, camera);
-    requestAnimationFrame(render);
-  }
+  camera.rotation.order = 'YXZ';
+  function render() { renderer.render(scene, camera); requestAnimationFrame(render); }
   function resize() { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); }
   addEventListener('resize', resize, { passive: true });
   requestAnimationFrame(render);
-  return { renderer, scene, camera, geometry, meshDuration: result.duration, terrainHash: generated.hash, biomeData: generated.biomes, drawCalls: () => renderer.info.render.calls };
+  return { renderer, scene, camera, geometry, physicsBlocks, meshDuration: result.duration, terrainHash: generated.hash, biomeData: generated.biomes, drawCalls: () => renderer.info.render.calls };
 }
