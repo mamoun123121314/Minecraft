@@ -44,3 +44,6 @@
 
 ## 1.5.0 — Live Block Interaction
 - Added survival placement with occupancy and player-collision rejection, middle-click block picking, four-tick placement cooldowns, inventory consumption, touchscreen placement, and live target-plus-neighbor worker remeshing after every break or placement.
+
+## 1.6.0 — Layered Voxel Rendering
+- Split every chunk mesh into opaque, alpha-tested cutout, and depth-write-disabled translucent geometry, with dedicated materials for solid terrain, leaves and plants, and water, glass, and ice.
