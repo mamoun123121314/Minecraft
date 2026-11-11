@@ -1493,6 +1493,18 @@ export const JAVA_ITEM_PROPERTIES=Object.freeze({
   "netherite_boots": {
     "stackSize": 1
   },
+  "rotten_flesh": {
+    "stackSize": 64
+  },
+  "trident": {
+    "stackSize": 1
+  },
+  "bow": {
+    "stackSize": 1
+  },
+  "shield": {
+    "stackSize": 1
+  },
   "wheat_seeds": {
     "stackSize": 64
   },
@@ -1648,12 +1660,6 @@ export const JAVA_ITEM_PROPERTIES=Object.freeze({
   },
   "arrow": {
     "stackSize": 64
-  },
-  "bow": {
-    "stackSize": 1
-  },
-  "shield": {
-    "stackSize": 1
   },
   "shears": {
     "stackSize": 1
