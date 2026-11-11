@@ -18,6 +18,9 @@ A single-player voxel survival game in the browser. Original engine, original pr
 | Shift | Sneak / descend while flying |
 | Ctrl | Sprint |
 | Left mouse | Mine targeted block |
+| Right mouse | Place held block |
+| Middle mouse | Pick targeted block |
+| Touch ▣ | Place held block |
 | 1–9 | Select hotbar slot |
 | E | Open or close inventory |
 | Esc | Pause / close inventory |

@@ -41,3 +41,6 @@
 
 ## 1.4.0 — Full-Height Streaming Overworld
 - Replaced the 128-block bounded demonstration with 384-block chunks spanning Y −64 through 319, ragged deep bedrock, deepslate transition, current ore depth bands, broader continental terrain, and on-demand 3×3 chunk streaming that follows the player indefinitely.
+
+## 1.5.0 — Live Block Interaction
+- Added survival placement with occupancy and player-collision rejection, middle-click block picking, four-tick placement cooldowns, inventory consumption, touchscreen placement, and live target-plus-neighbor worker remeshing after every break or placement.
