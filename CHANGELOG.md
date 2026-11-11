@@ -62,3 +62,6 @@
 
 ## 1.11.0 — Harvest and Loot
 - Added tool-class mining speeds, harvest tiers, canonical basic block drops, ore loot, no-drop handling for insufficient tools, and stack-aware inventory insertion, removal, overflow, and consumption. Mined loot now enters the player inventory.
+
+## 1.12.0 — Food and Eating
+- Added calibrated nutrition and saturation for 15 foods, 32-tick eating, full-hunger gating, held-item cancellation, inventory consumption, saturation clamping, live hunger HUD, and live hotbar counts.
