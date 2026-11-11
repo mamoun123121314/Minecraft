@@ -26,4 +26,7 @@ export const BREWING_RECIPES = Object.freeze({
   'awkward:magma_cream': 'fire_resistance',
   'awkward:pufferfish': 'water_breathing',
 });
+export const EXTENDED_POTIONS = Object.freeze({ poison: 1800, regeneration: 1800, strength: 9600, swiftness: 9600, slowness: 4800, fire_resistance: 9600, water_breathing: 9600, weakness: 4800 });
+export const AMPLIFIED_POTIONS = Object.freeze({ poison: 420, regeneration: 450, strength: 1800, swiftness: 1800, slowness: 400 });
+export const INSTANT_POTIONS = Object.freeze({ healing: 1, harming: 1 });
 export const BREW_TICKS = 400, BREW_FUEL_USES = 20;

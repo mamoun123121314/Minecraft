@@ -24,6 +24,8 @@ jobs:
       - run: npm run food
       - name: Brewing and effects
         run: npm run brewing
+      - name: Potion parity
+        run: npm run potion-parity
       - run: npm run save
       - run: npm run world
       - run: npm run gravity
