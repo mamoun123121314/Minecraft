@@ -899,6 +899,123 @@ export const JAVA_BLOCK_PROPERTIES=Object.freeze({
     "filterLight": 0,
     "boundingBox": "empty",
     "material": "default"
+  },
+  "oak_slab": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "oak_stairs": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "oak_fence": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "cobblestone_wall": {
+    "hardness": 2,
+    "diggable": true,
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/pickaxe"
+  },
+  "oak_door": {
+    "hardness": 3,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "mineable/axe"
+  },
+  "wheat": {
+    "hardness": 0,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "carrots": {
+    "hardness": 0,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "potatoes": {
+    "hardness": 0,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "beetroots": {
+    "hardness": 0,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "nether_wart": {
+    "hardness": 0,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "pumpkin_stem": {
+    "hardness": 0,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "melon_stem": {
+    "hardness": 0,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "empty",
+    "material": "default"
+  },
+  "cocoa": {
+    "hardness": 0.2,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "plant;mineable/axe"
   }
 });
 export const JAVA_ITEM_PROPERTIES=Object.freeze({
@@ -1193,6 +1310,27 @@ export const JAVA_ITEM_PROPERTIES=Object.freeze({
   "dead_bush": {
     "stackSize": 64
   },
+  "oak_slab": {
+    "stackSize": 64
+  },
+  "oak_stairs": {
+    "stackSize": 64
+  },
+  "oak_fence": {
+    "stackSize": 64
+  },
+  "cobblestone_wall": {
+    "stackSize": 64
+  },
+  "oak_door": {
+    "stackSize": 64
+  },
+  "wheat": {
+    "stackSize": 64
+  },
+  "nether_wart": {
+    "stackSize": 64
+  },
   "wooden_pickaxe": {
     "stackSize": 1
   },
@@ -1355,6 +1493,24 @@ export const JAVA_ITEM_PROPERTIES=Object.freeze({
   "netherite_boots": {
     "stackSize": 1
   },
+  "wheat_seeds": {
+    "stackSize": 64
+  },
+  "beetroot_seeds": {
+    "stackSize": 64
+  },
+  "pumpkin_seeds": {
+    "stackSize": 64
+  },
+  "melon_seeds": {
+    "stackSize": 64
+  },
+  "cocoa_beans": {
+    "stackSize": 64
+  },
+  "bone_meal": {
+    "stackSize": 64
+  },
   "stick": {
     "stackSize": 64
   },
@@ -1410,9 +1566,6 @@ export const JAVA_ITEM_PROPERTIES=Object.freeze({
     "stackSize": 64
   },
   "clay_ball": {
-    "stackSize": 64
-  },
-  "wheat": {
     "stackSize": 64
   },
   "string": {
@@ -1539,15 +1692,6 @@ export const JAVA_ITEM_PROPERTIES=Object.freeze({
     "stackSize": 1
   },
   "oak_trapdoor": {
-    "stackSize": 64
-  },
-  "oak_fence": {
-    "stackSize": 64
-  },
-  "oak_stairs": {
-    "stackSize": 64
-  },
-  "oak_slab": {
     "stackSize": 64
   },
   "minecart": {
