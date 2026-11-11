@@ -14,3 +14,6 @@
 
 ## Phase 4 — Player Physics and Controls
 - Added first-person pointer-lock controls, normalized movement, sprint, sneak, creative flight, fixed 20 Hz physics, swept collision, and locked gameplay constants.
+
+## Phase 5 — Block Interaction
+- Added DDA-style reach raycasting, selection outlines, timed mining, mutable blocks, nine-slot hotbar, hearts, and crosshair.

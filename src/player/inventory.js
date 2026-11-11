@@ -1,0 +1,1 @@
+export class Inventory{constructor(){this.slots=Array(36).fill(null);this.selected=0;this.slots[0]={id:'stone',count:64};this.slots[1]={id:'dirt',count:64};this.slots[2]={id:'oak_planks',count:64};}select(i){this.selected=(i+9)%9;}get held(){return this.slots[this.selected];}}
