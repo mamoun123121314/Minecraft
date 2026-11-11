@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.16.0 — Interactive Containers
+- Replaced display-only inventory/chest controls with cursor pickup, swapping, merging, right-click splitting/single placement, shift-click transfers, and overflow-safe movement.
+- Added consumable 2×2 crafting outputs, safe item return on close, usable furnace input/fuel/output slots, output merging, fuel gating, and full-output protection.
+- Added position-keyed chest inventories, chest/furnace world opening, autosave serialization, and deterministic plus browser-level interaction tests.
+
 ## 1.15.0 — Combat and Equipment
 - Added Java-calibrated tool/weapon attack damage and speed, cooldown charge scaling, three-block entity targeting, falling critical hits, knockback, and ten-tick hurt invulnerability.
 - Added equipable armor and offhand shields, armor/toughness mitigation with an 80% cap, durability consumption for combat/mining/equipment, and equipped-item death drops.

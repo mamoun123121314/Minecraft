@@ -53,4 +53,4 @@ Cubeworld targets **Current Java Edition 26.1.2** for factual mechanics and regi
 
 ## Verification
 
-CI parses every module, scans for runtime networking and binary assets, validates the frozen palette, launches a headless browser, captures day/night/atlas screenshots, and runs deterministic tests for physics, mining, lighting, crafting, survival, combat, fluids, farming, block states, and save round trips.
+CI parses every module, scans for runtime networking and binary assets, validates the frozen palette, launches a headless browser, captures day/night/atlas screenshots, and runs deterministic tests for physics, mining, lighting, crafting, survival, combat, containers, fluids, farming, block states, and save round trips.

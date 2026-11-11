@@ -14,7 +14,7 @@ Baseline: **Java 26.1.2** from [PrismarineJS minecraft-data](https://github.com/
 
 ## Behavior coverage
 
-Registry overlap is not behavior parity. Cubeworld 1.15.0 remains approximately **18% behavior-complete** across the full requested Java scope. This engineering estimate weighs complete systems and their integration, not names. Fluids, farming, melee combat, armor, shields and projectiles are useful subsets, not complete Java systems. Missing mechanics include exact projectile ballistics/pickup and charging, attack attributes and enchantments, most entity interactions, redstone, dimensions/structures, brewing, and most containers.
+Registry overlap is not behavior parity. Cubeworld 1.16.0 remains approximately **19% behavior-complete** across the full requested Java scope. This engineering estimate weighs complete systems and their integration, not names. Fluids, farming, melee combat, armor, shields and projectiles are useful subsets, not complete Java systems. Missing mechanics include exact projectile ballistics/pickup and charging, attack attributes and enchantments, most entity interactions, redstone, dimensions/structures, brewing, and most containers.
 
 ## Fidelity priorities
 
