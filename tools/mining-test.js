@@ -1,1 +1,11 @@
-import{breakTicks}from'../src/player/mining.js';const wood=Math.ceil(breakTicks(1.5,2,true));const hand=Math.ceil(breakTicks(1.5,1,false));if(wood!==23||hand!==150)throw Error(`${wood}/${hand}`);console.log('Mining timing passed: wooden pick 23 ticks, hand 150 ticks.');
+import{breakTicks,miningProfile,MiningSystem}from'../src/player/mining.js';
+import{BLOCKS}from'../data/blocks.js';
+import{Chunk}from'../src/world/chunk.js';
+const wood=Math.ceil(breakTicks(1.5,2,true)),hand=Math.ceil(breakTicks(1.5,1,false));if(wood!==23||hand!==150)throw Error(`${wood}/${hand}`);
+let profile=miningProfile(BLOCKS.stone.id,'wooden_pickaxe');if(profile.speed!==2||!profile.harvest||profile.drop!=='cobblestone')throw Error('Wooden pickaxe must harvest stone as cobblestone');
+profile=miningProfile(BLOCKS.stone.id,null);if(profile.harvest||profile.drop)throw Error('Stone broken by hand must not drop');
+profile=miningProfile(BLOCKS.diamond_ore.id,'stone_pickaxe');if(profile.harvest||profile.drop)throw Error('Stone pickaxe must not harvest diamond ore');
+profile=miningProfile(BLOCKS.diamond_ore.id,'iron_pickaxe');if(!profile.harvest||profile.drop!=='diamond')throw Error('Iron pickaxe must harvest diamond ore');
+profile=miningProfile(BLOCKS.oak_log.id,'iron_axe');if(profile.speed!==6||profile.drop!=='oak_log')throw Error('Axe must accelerate logs and preserve their drop');
+const chunk=new Chunk();chunk.set(1,1,1,BLOCKS.coal_ore.id);const mining=new MiningSystem(chunk.blocks),target={block:BLOCKS.coal_ore.id,pos:{x:1,y:1,z:1}};let result=false;for(let tick=0;tick<100&&!result;tick++)result=mining.tick(target,true,'stone_pickaxe');if(result.drop!=='coal'||chunk.get(1,1,1)!==0)throw Error('Completed mining must remove block and return loot');
+console.log('Mining checks passed: timings, tool classes, harvest tiers, block loot, and completed drops.');
