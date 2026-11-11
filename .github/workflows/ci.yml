@@ -19,6 +19,7 @@ jobs:
       - run: npm run crafting
       - run: npm run survival
       - run: npm run save
+      - run: npm run world
       - name: Run browser smoke test
         shell: bash
         run: |

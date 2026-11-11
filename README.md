@@ -9,6 +9,9 @@ A single-player voxel survival game in the browser. Original engine, original pr
 | Input | Action |
 |---|---|
 | Click | Lock pointer / enable audio |
+| Touch joystick | Move on phones and tablets |
+| Drag right side | Look on touchscreens |
+| Touch ▲ / ⛏ | Jump / mine |
 | W A S D | Move |
 | Mouse | Look |
 | Space | Jump; double-tap to toggle flight |
