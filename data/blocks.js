@@ -15,8 +15,8 @@ for(const wood of ['oak','birch','spruce','jungle','acacia','dark_oak']){
 }
 for(const color of ['white','black','red','blue','green','yellow','orange','purple','cyan','lime','pink','gray','light_gray','brown','magenta'])entries.push(block(id++,`${color}_wool`,`${color}_wool`,{hardness:.8}));
 const utility={crafting_table:'crafting_table_side',furnace:'furnace_front',lit_furnace:'furnace_lit',chest:'chest',ladder:'ladder',bookshelf:'bookshelf',tnt:'tnt',pumpkin:'pumpkin',melon:'melon',cactus:'cactus_side',sugar_cane:'sugar_cane',torch:'torch'};
-for(const [name,texture] of Object.entries(utility))entries.push(block(id++,name,texture,{opaque:!['ladder','sugar_cane','torch'].includes(name),solid:!['ladder','sugar_cane','torch'].includes(name),renderLayer:['ladder','sugar_cane','torch'].includes(name)?'cutout':'opaque',light:name==='torch'?14:0}));
-for(const [name,texture] of Object.entries({oak_sapling:'oak_sapling',grass_tuft:'grass_tuft',dandelion:'dandelion',poppy:'poppy',fern:'fern',dead_bush:'dead_bush'}))entries.push(block(id++,name,texture,{solid:false,opaque:false,hardness:0,renderLayer:'cutout'}));
+for(const [name,texture] of Object.entries(utility))entries.push(block(id++,name,texture,{opaque:!['ladder','sugar_cane','torch'].includes(name),solid:!['ladder','sugar_cane','torch'].includes(name),renderLayer:['ladder','sugar_cane','torch'].includes(name)?'cutout':'opaque',model:name==='sugar_cane'?'cross':name==='torch'?'torch':name==='ladder'?'flat':'cube',light:name==='torch'?14:0}));
+for(const [name,texture] of Object.entries({oak_sapling:'oak_sapling',grass_tuft:'grass_tuft',dandelion:'dandelion',poppy:'poppy',fern:'fern',dead_bush:'dead_bush'}))entries.push(block(id++,name,texture,{solid:false,opaque:false,hardness:0,renderLayer:'cutout',model:'cross'}));
 export const BLOCKS=Object.freeze(Object.fromEntries(entries.map(value=>[value.name,value])));
 export const BLOCK_BY_ID=Object.freeze(Object.fromEntries(entries.map(value=>[value.id,value])));
 export const BLOCK_COUNT=entries.length;

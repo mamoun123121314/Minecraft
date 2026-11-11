@@ -53,3 +53,6 @@
 
 ## 1.8.0 — Two-Channel Voxel Lighting
 - Added per-chunk skylight columns, opacity-aware block-light flood fill, per-vertex sky and block light attributes, an exact brightness-curve voxel shader, warm emitter tinting, daylight-independent block light, and placeable non-solid light sources.
+
+## 1.9.0 — Specialized Block Models
+- Replaced full-cube stand-ins with crossed plant quads, 0.875-height liquid surfaces, slim torch cuboids, and wall-flat ladders while retaining cutout/translucent lighting, interaction, and remeshing behavior.
