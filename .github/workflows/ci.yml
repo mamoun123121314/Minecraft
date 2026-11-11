@@ -1,0 +1,31 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Run browser smoke test
+        shell: bash
+        run: |
+          set +e
+          output=$(npm run smoke 2>&1)
+          status=$?
+          printf '%s\n' "$output"
+          if [ "$status" -ne 0 ]; then
+            message=$(printf '%s' "$output" | tail -20 | tr '\n' ' ' | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g')
+            echo "::error title=Browser smoke test failed::$message"
+            exit "$status"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase-0-screenshot
+          path: artifacts/screenshot.png
