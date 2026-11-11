@@ -21,13 +21,13 @@ try {
     const fps = document.querySelector('#fps');
     if (!canvas || !fps) return { canvas: false, fps: false, variation: 0 };
     const pixels = canvas.getContext('webgl2') || canvas.getContext('webgl');
-    const sample = new Uint8Array(4 * 500);
+    const sample = new Uint8Array(4);
     const values = [];
     for (let i = 0; i < 500; i += 1) {
       const x = (i * 97) % canvas.width;
       const y = (i * 53) % canvas.height;
-      pixels.readPixels(x, y, 1, 1, pixels.RGBA, pixels.UNSIGNED_BYTE, sample, i * 4);
-      values.push((sample[i * 4] + sample[i * 4 + 1] + sample[i * 4 + 2]) / 3);
+      pixels.readPixels(x, y, 1, 1, pixels.RGBA, pixels.UNSIGNED_BYTE, sample);
+      values.push((sample[0] + sample[1] + sample[2]) / 3);
     }
     const mean = values.reduce((a, b) => a + b, 0) / values.length;
     const variation = Math.sqrt(values.reduce((sum, value) => sum + (value - mean) ** 2, 0) / values.length);
