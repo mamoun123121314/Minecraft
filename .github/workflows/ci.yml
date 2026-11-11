@@ -14,6 +14,7 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run physics
+      - run: npm run mining
       - name: Run browser smoke test
         shell: bash
         run: |
