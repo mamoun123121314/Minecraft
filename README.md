@@ -17,7 +17,7 @@ Click the game to begin. Movement and survival controls arrive in their gated ph
 | 2 | Chunk meshing and terrain rendering | ✅ |
 | 3 | Procedural world generation | ✅ |
 | 4 | Player physics and controls | ✅ |
-| 5 | Block interaction and hotbar | ⬜ |
+| 5 | Block interaction and hotbar | ✅ |
 | 6 | Lighting and atmosphere | ⬜ |
 | 7 | Inventory and crafting | ⬜ |
 | 8 | Survival and mobs | ⬜ |
