@@ -16,6 +16,8 @@ try {
   page.on('request', (request) => { if (new URL(request.url()).origin !== `http://127.0.0.1:${port}`) errors.push(`External request: ${request.url()}`); });
   await page.goto(`http://127.0.0.1:${port}`, { waitUntil: 'networkidle0' });
   await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 5000 });
+  const phaseTwo = await page.evaluate(() => ({ phase: window.__cubeworld.phase, calls: window.__cubeworld.drawCalls(), vertices: window.__cubeworld.geometry.attributes.position.count }));
+  if (phaseTwo.phase !== 2 || phaseTwo.calls > 12 || phaseTwo.vertices < 1000) errors.push(`Invalid Phase 2 scene: ${JSON.stringify(phaseTwo)}`);
   const result = await page.evaluate(() => {
     const canvas = document.querySelector('canvas');
     const fps = document.querySelector('#fps');
