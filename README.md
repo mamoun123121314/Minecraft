@@ -21,7 +21,7 @@ Click the game to begin. Movement and survival controls arrive in their gated ph
 | 6 | Lighting and atmosphere | ✅ |
 | 7 | Inventory and crafting | ✅ |
 | 8 | Survival and mobs | ✅ |
-| 9 | Persistence, weather, audio, and polish | ⬜ |
+| 9 | Persistence, weather, audio, and polish | ✅ |
 
 ## Architecture
 

@@ -1,0 +1,1 @@
+export class WeatherSystem{constructor(){this.type='clear';this.ticks=0;this.layer=document.createElement('div');this.layer.className='weather-layer';document.body.append(this.layer);}set(type){this.type=type;this.layer.className=`weather-layer ${type}`;}tick(){this.ticks++;if(this.ticks%12000===0)this.set(this.type==='clear'?'rain':'clear');}}

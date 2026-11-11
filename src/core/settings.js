@@ -1,0 +1,2 @@
+export const DEFAULT_SETTINGS=Object.freeze({fov:70,renderDistance:12,guiScale:2,sensitivity:100,gamma:50,smoothLighting:true,ao:true,fancy:true,particles:'all',volume:70,invertMouse:false});
+export class Settings{constructor(){let stored={};try{stored=JSON.parse(localStorage.getItem('cubeworld.settings')||'{}');}catch{}this.values={...DEFAULT_SETTINGS,...stored};}get(key){return this.values[key];}set(key,value){this.values[key]=value;try{localStorage.setItem('cubeworld.settings',JSON.stringify(this.values));}catch{}return value;}}
