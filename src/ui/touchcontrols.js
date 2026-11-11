@@ -1,0 +1,14 @@
+const press=(player,code,active)=>active?player.keys.add(code):player.keys.delete(code);
+export function createTouchControls(player,{onMine,onInventory,onPause}){
+  const touchCapable=matchMedia('(pointer: coarse)').matches||navigator.maxTouchPoints>0;
+  const root=document.createElement('div');root.className=`touch-controls${touchCapable?'':' hidden'}`;
+  root.innerHTML='<div class="touch-stick"><div class="touch-knob"></div></div><div class="touch-look"></div><button class="touch-action jump" aria-label="Jump">▲</button><button class="touch-action mine" aria-label="Mine">⛏</button><button class="touch-action inventory" aria-label="Inventory">⋯</button><button class="touch-action pause" aria-label="Pause">Ⅱ</button>';
+  document.body.append(root);
+  const stick=root.querySelector('.touch-stick'),knob=root.querySelector('.touch-knob'),look=root.querySelector('.touch-look');let stickId=null,lookId=null,lastX=0,lastY=0;
+  function moveStick(event){const rect=stick.getBoundingClientRect(),dx=event.clientX-(rect.left+rect.width/2),dy=event.clientY-(rect.top+rect.height/2),length=Math.hypot(dx,dy)||1,scale=Math.min(1,42/length),x=dx*scale,y=dy*scale;knob.style.transform=`translate(${x}px,${y}px)`;press(player,'KeyW',y<-12);press(player,'KeyS',y>12);press(player,'KeyA',x<-12);press(player,'KeyD',x>12);}
+  stick.addEventListener('pointerdown',event=>{stickId=event.pointerId;stick.setPointerCapture(stickId);moveStick(event);});stick.addEventListener('pointermove',event=>{if(event.pointerId===stickId)moveStick(event);});const stopStick=()=>{stickId=null;knob.style.transform='';for(const code of['KeyW','KeyS','KeyA','KeyD'])press(player,code,false);};stick.addEventListener('pointerup',stopStick);stick.addEventListener('pointercancel',stopStick);
+  look.addEventListener('pointerdown',event=>{lookId=event.pointerId;lastX=event.clientX;lastY=event.clientY;look.setPointerCapture(lookId);});look.addEventListener('pointermove',event=>{if(event.pointerId!==lookId)return;player.yaw-=(event.clientX-lastX)*.005;player.pitch=Math.max(-1.553,Math.min(1.553,player.pitch-(event.clientY-lastY)*.005));lastX=event.clientX;lastY=event.clientY;});look.addEventListener('pointerup',()=>{lookId=null;});
+  const hold=(selector,code,callback)=>{const element=root.querySelector(selector);element.addEventListener('pointerdown',event=>{event.preventDefault();if(code)press(player,code,true);callback?.(true);});element.addEventListener('pointerup',()=>{if(code)press(player,code,false);callback?.(false);});element.addEventListener('pointercancel',()=>{if(code)press(player,code,false);callback?.(false);});};
+  hold('.jump','Space');hold('.mine',null,onMine);root.querySelector('.inventory').addEventListener('click',onInventory);root.querySelector('.pause').addEventListener('click',onPause);
+  return{root,visible:touchCapable};
+}
