@@ -25,6 +25,7 @@ jobs:
       - run: npm run gravity
       - run: npm run mesher
       - run: npm run block-actions
+      - run: npm run block-states
       - run: npm run blocks
       - run: npm run items
       - run: npm run recipes
