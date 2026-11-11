@@ -11,7 +11,8 @@
     "physics": "node tools/physics-test.js",
     "mining": "node tools/mining-test.js",
     "lighting": "node tools/lighting-test.js",
-    "crafting": "node tools/crafting-test.js"
+    "crafting": "node tools/crafting-test.js",
+    "survival": "node tools/survival-test.js"
   },
   "devDependencies": {
     "acorn": "8.14.0",
