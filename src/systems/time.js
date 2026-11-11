@@ -1,0 +1,2 @@
+export const DAY_TICKS=24000;
+export class WorldTime{constructor(ticks=6000){this.ticks=ticks%DAY_TICKS;}tick(){this.ticks=(this.ticks+1)%DAY_TICKS;}set(value){this.ticks=((value%DAY_TICKS)+DAY_TICKS)%DAY_TICKS;}get daylight(){const t=this.ticks;if(t>=13500&&t<=22500)return .05;if(t>11500&&t<13500){const x=(t-11500)/2000;return Math.max(.05,1-x*x*(3-2*x));}if(t>22500||t<1000){const x=t>22500?(t-22500)/2500:(t+1500)/2500;return Math.max(.05,x*x*(3-2*x));}return 1;}get phase(){return Math.floor(this.ticks/DAY_TICKS)%8;}}
