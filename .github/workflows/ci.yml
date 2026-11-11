@@ -23,6 +23,7 @@ jobs:
       - run: npm run blocks
       - run: npm run items
       - run: npm run recipes
+      - run: npm run fidelity-java
       - name: Run browser smoke test
         shell: bash
         run: |
