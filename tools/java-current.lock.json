@@ -1388,6 +1388,7 @@
         "red_wool",
         "redstone",
         "redstone_ore",
+        "rotten_flesh",
         "sand",
         "sandstone",
         "shears",
@@ -1410,6 +1411,7 @@
         "sugar_cane",
         "tnt",
         "torch",
+        "trident",
         "tuff",
         "water_bucket",
         "wheat",
@@ -2377,7 +2379,6 @@
         "rib_armor_trim_smithing_template",
         "rooted_dirt",
         "rose_bush",
-        "rotten_flesh",
         "saddle",
         "salmon",
         "salmon_bucket",
@@ -2529,7 +2530,6 @@
         "trapped_chest",
         "trial_key",
         "trial_spawner",
-        "trident",
         "tripwire_hook",
         "tropical_fish",
         "tropical_fish_bucket",
@@ -2705,7 +2705,7 @@
         "zombie_villager_spawn_egg",
         "zombified_piglin_spawn_egg"
       ],
-      "percent": 15.01
+      "percent": 15.14
     },
     "entities": {
       "implemented": [
