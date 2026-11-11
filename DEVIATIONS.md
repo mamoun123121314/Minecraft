@@ -14,3 +14,5 @@
 | Simplified equipment input | `src/player/inventory.js` | Right-click equips armor/shield within the existing inventory UI | Java also supports dedicated armor/offhand slot dragging and creative inventory interactions |
 | Edited-network redstone rebuild | `src/systems/redstone.js` | Deterministic propagation for tracked player-edited components without chunk tick-list infrastructure | Java uses directional/shape-aware neighbor updates, quasi-connectivity, locational ordering and additional scheduled tick types |
 | Static redstone dust model | `src/world/mesher.js` | Preserves power behavior with a compact original crossed-line texture | Java computes dot/line/cross/corner/T connection models from neighboring dust |
+| Straight stair shapes only | `src/world/shapes.js` | Supports facing and top/bottom collision without analyzing diagonal stair neighbors | Java derives straight/inner-left/inner-right/outer-left/outer-right shapes |
+| Full-voxel block raycast | `src/player/mining.js` | Retains deterministic grid traversal for reach and selection | Java intersects the precise selection shape of slabs, stairs, doors and other modeled blocks |
