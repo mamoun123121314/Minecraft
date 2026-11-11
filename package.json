@@ -1,0 +1,16 @@
+{
+  "name": "cubeworld",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A single-player voxel survival game in the browser. Original engine, original procedural art.",
+  "scripts": {
+    "check": "node tools/check-fidelity.js",
+    "smoke": "node tools/smoke-test.js",
+    "test": "npm run check && npm run smoke"
+  },
+  "devDependencies": {
+    "acorn": "8.14.0",
+    "puppeteer": "23.10.4"
+  }
+}
