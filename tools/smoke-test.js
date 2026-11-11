@@ -8,7 +8,7 @@ const errors = [];
 let browser;
 try {
   await new Promise((resolve) => setTimeout(resolve, 500));
-  browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', '--use-gl=swiftshader'] });
+  browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 720 });
   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
