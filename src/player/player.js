@@ -1,14 +1,15 @@
-import { CHUNK_SIZE, CHUNK_HEIGHT, blockIndex } from '../world/chunk.js';
+import { CHUNK_HEIGHT, blockIndex } from '../world/chunk.js';
 
 export const PLAYER_CONSTANTS = Object.freeze({
   width: 0.6, height: 1.8, sneakHeight: 1.5, eyeHeight: 1.62, sneakEyeHeight: 1.27,
   walkSpeed: 4.317, sprintSpeed: 5.612, sneakSpeed: 1.295, flySpeed: 10.89,
   jumpVelocity: 0.42, gravity: -0.08, verticalDrag: 0.98, airDrag: 0.91, reach: 4.5
 });
+const blockAt=(blocks,x,y,z)=>typeof blocks.getBlock==='function'?blocks.getBlock(x,y,z):blocks[blockIndex(x,y,z)];
 const solidAt = (blocks, x, y, z) => {
   const bx=Math.floor(x), by=Math.floor(y), bz=Math.floor(z);
-  if (bx<0||bx>=CHUNK_SIZE||bz<0||bz>=CHUNK_SIZE||by<0||by>=CHUNK_HEIGHT) return by<0;
-  const id=blocks[blockIndex(bx,by,bz)];
+  if(by<0||by>=CHUNK_HEIGHT)return by<0;
+  const id=blockAt(blocks,bx,by,bz);
   return id!==0 && id!==5 && id!==15;
 };
 export class Player {
