@@ -16,8 +16,8 @@ try {
   page.on('request', (request) => { if (new URL(request.url()).origin !== `http://127.0.0.1:${port}`) errors.push(`External request: ${request.url()}`); });
   await page.goto(`http://127.0.0.1:${port}`, { waitUntil: 'networkidle0' });
   await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 10000 });
-  const phaseTwo = await page.evaluate(() => ({ phase: window.__cubeworld.phase, calls: window.__cubeworld.drawCalls(), vertices: window.__cubeworld.geometry.attributes.position.count, hash: window.__cubeworld.terrainHash }));
-  if (phaseTwo.phase !== 9 || phaseTwo.calls > 40 || phaseTwo.vertices < 1000 || !phaseTwo.hash) errors.push(`Invalid Phase 2 scene: ${JSON.stringify(phaseTwo)}`);
+  const phaseTwo = await page.evaluate(() => ({ phase: window.__cubeworld.phase, calls: window.__cubeworld.drawCalls(), vertices: window.__cubeworld.geometry.attributes.position.count, hash: window.__cubeworld.terrainHash, skyLight: !!window.__cubeworld.geometry.getAttribute('skyLight'), blockLight: !!window.__cubeworld.geometry.getAttribute('blockLight') }));
+  if (phaseTwo.phase !== 9 || phaseTwo.calls > 40 || phaseTwo.vertices < 1000 || !phaseTwo.hash || !phaseTwo.skyLight || !phaseTwo.blockLight) errors.push(`Invalid Phase 2 scene: ${JSON.stringify(phaseTwo)}`);
   const renderLayers = await page.evaluate(() => Object.fromEntries(Object.entries(window.__cubeworld.materials).map(([name, material]) => [name, { transparent: material.transparent, depthWrite: material.depthWrite, alphaTest: material.alphaTest }])));
   if (!renderLayers.opaque || !renderLayers.translucent || renderLayers.translucent.depthWrite || !renderLayers.cutout || renderLayers.cutout.alphaTest !== 0.5) errors.push(`Invalid material layers: ${JSON.stringify(renderLayers)}`);
   const remesh = await page.evaluate(async () => { const before = window.__cubeworld.terrainGroup.children.find(mesh => mesh.userData.cx === 0 && mesh.userData.cz === 0)?.uuid; const y = window.__cubeworld.world.highestSolid(8, 8) + 1; window.__cubeworld.world.setBlock(8, y, 8, 3); await window.__cubeworld.remeshAt(8, 8); const after = window.__cubeworld.terrainGroup.children.find(mesh => mesh.userData.cx === 0 && mesh.userData.cz === 0)?.uuid; return { before, after, id: window.__cubeworld.world.getBlock(8, y, 8) }; });
@@ -53,8 +53,8 @@ try {
   await page.setViewport({ width: 1280, height: 720, isMobile: false, hasTouch: false });
   await page.goto(`http://127.0.0.1:${port}/?time=18000`, { waitUntil: 'networkidle0' });
   await page.waitForFunction(() => window.__cubeworld?.ready === true, { timeout: 10000 });
-  await page.waitForFunction(() => window.__cubeworld.materials.opaque.color.r < 0.3, { timeout: 3000 });
-  const nightLighting = await page.evaluate(() => ({ terrain: window.__cubeworld.materials.opaque.color.r, stars: window.__cubeworld.sky.stars.opacity }));
+  await page.waitForFunction(() => window.__cubeworld.materials.opaque.userData.daylight < 0.1, { timeout: 3000 });
+  const nightLighting = await page.evaluate(() => ({ terrain: window.__cubeworld.materials.opaque.userData.daylight, stars: window.__cubeworld.sky.stars.opacity }));
   if (nightLighting.terrain >= 0.3 || nightLighting.stars <= 0.8) errors.push(`Invalid nighttime lighting: ${JSON.stringify(nightLighting)}`);
   await page.screenshot({ path: 'artifacts/night.png' });
   await page.goto(`http://127.0.0.1:${port}/?atlas`, { waitUntil: 'networkidle0' });
