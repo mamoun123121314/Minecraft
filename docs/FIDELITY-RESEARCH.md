@@ -9,12 +9,12 @@ Baseline: **Java 26.1.2** from [PrismarineJS minecraft-data](https://github.com/
 | Blocks | 1168 | 157 | 13.44% |
 | Items | 1506 | 279 | 18.53% |
 | Recipes | 887 | 136 | 15.33% |
-| Entities | 157 | 9 | 5.73% |
+| Entities | 157 | 10 | 6.37% |
 | Biomes | 65 | 5 | 7.69% |
 
 ## Behavior coverage
 
-Registry overlap is not behavior parity. Cubeworld 1.23.0 remains approximately **28% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families have real placement, model and collision states. Stairs calculate inner/outer corner shapes from live neighbors, and selection uses voxel DDA plus exact shape-box ray intersections for slabs, stairs, doors, trapdoors, gates, fences and walls. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
+Registry overlap is not behavior parity. Cubeworld 1.24.0 remains approximately **29% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families have real placement, model and collision states. Stairs calculate inner/outer corner shapes from live neighbors, and selection uses voxel DDA plus exact shape-box ray intersections for slabs, stairs, doors, trapdoors, gates, fences and walls. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
 
 ### Brewing and effects (1.20.0)
 
@@ -49,6 +49,12 @@ This is not the complete Java enchantment system: only four enchantment families
 Paper and leather craft books; enchanting a book creates an enchanted-book item with typed metadata. Anvils apply compatible book enchantments, merge equal levels up to caps, combine same-item enchantments, and repair same-item durability using both remaining durabilities plus 12% of maximum. Taking a result validates and deducts levels and consumes both inputs atomically. Grindstones remove enchantments without changing damage, convert enchanted books back to books, and return two XP per enchantment level. Both interfaces preserve item metadata/damage and return unused inputs on close. Stone slabs and their recipe support the grindstone recipe.
 
 Remaining differences include material-based repair, renaming, prior-work cost scaling, anvil damage/falling physics, Java's exact conflict/cost rules, grindstone two-item repair and precise XP formulas, and most enchantment families.
+
+### Villager trading (1.24.0)
+
+Farmer, librarian and toolsmith villagers spawn with stable IDs and professions. Right-click entity targeting opens a trading interface showing inputs, outputs, stock and affordability. Offers include crop/coal/paper sales, food and tools, and librarian enchanted books. Multi-input trades validate inventory and stock, consume inputs, add typed outputs and award player/villager XP. Output-capacity failure rolls back inventory and stock. Limited uses rebuild when the 24,000-tick clock wraps into a new day.
+
+This is a compact trading system, not full villager parity: offers are fixed rather than unlocked through profession levels, stock is not tied to workstations or work schedules, and exact Java prices/trade pools differ. Village generation, pathfinding, breeding, gossip/reputation, raids, zombie curing and the remaining professions remain unimplemented.
 
 ## Fidelity priorities
 

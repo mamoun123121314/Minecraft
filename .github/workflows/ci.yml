@@ -30,6 +30,8 @@ jobs:
         run: npm run enchanting
       - name: Anvil and grindstone
         run: npm run smithing
+      - name: Villager trading
+        run: npm run trading
       - run: npm run save
       - run: npm run world
       - run: npm run gravity
