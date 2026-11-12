@@ -6,15 +6,15 @@ Baseline: **Java 26.1.2** from [PrismarineJS minecraft-data](https://github.com/
 
 | Registry | Current Java | Cubeworld overlap | Coverage |
 |---|---:|---:|---:|
-| Blocks | 1168 | 154 | 13.18% |
-| Items | 1506 | 278 | 18.46% |
-| Recipes | 887 | 132 | 14.88% |
+| Blocks | 1168 | 157 | 13.44% |
+| Items | 1506 | 279 | 18.53% |
+| Recipes | 887 | 136 | 15.33% |
 | Entities | 157 | 9 | 5.73% |
 | Biomes | 65 | 5 | 7.69% |
 
 ## Behavior coverage
 
-Registry overlap is not behavior parity. Cubeworld 1.22.0 remains approximately **27% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families have real placement, model and collision states. Stairs calculate inner/outer corner shapes from live neighbors, and selection uses voxel DDA plus exact shape-box ray intersections for slabs, stairs, doors, trapdoors, gates, fences and walls. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
+Registry overlap is not behavior parity. Cubeworld 1.23.0 remains approximately **28% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families have real placement, model and collision states. Stairs calculate inner/outer corner shapes from live neighbors, and selection uses voxel DDA plus exact shape-box ray intersections for slabs, stairs, doors, trapdoors, gates, fences and walls. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
 
 ### Brewing and effects (1.20.0)
 
@@ -42,7 +42,13 @@ An original enchanting-table block and interface provide three deterministic off
 
 Efficiency adds level-squared-plus-one speed with a correct tool, Sharpness adds 0.5×level+0.5 melee damage, Protection supplies capped post-armor EPF reduction, and Unbreaking uses separate tool/armor durability-save probabilities. Armor now has material/piece durability values and breaks through the existing equipment path.
 
-This is not the complete Java enchantment system: only four enchantment families are available, offer generation is deterministic but not Java's exact enchantability/seed algorithm, XP costs reset the current level's progress, and enchanted books, anvils, grindstones, villager trading and most treasure/specialized enchantments remain unimplemented.
+This is not the complete Java enchantment system: only four enchantment families are available, offer generation is deterministic but not Java's exact enchantability/seed algorithm, XP costs reset the current level's progress, and villager trading and most treasure/specialized enchantments remain unimplemented.
+
+### Books, anvils and grindstones (1.23.0)
+
+Paper and leather craft books; enchanting a book creates an enchanted-book item with typed metadata. Anvils apply compatible book enchantments, merge equal levels up to caps, combine same-item enchantments, and repair same-item durability using both remaining durabilities plus 12% of maximum. Taking a result validates and deducts levels and consumes both inputs atomically. Grindstones remove enchantments without changing damage, convert enchanted books back to books, and return two XP per enchantment level. Both interfaces preserve item metadata/damage and return unused inputs on close. Stone slabs and their recipe support the grindstone recipe.
+
+Remaining differences include material-based repair, renaming, prior-work cost scaling, anvil damage/falling physics, Java's exact conflict/cost rules, grindstone two-item repair and precise XP formulas, and most enchantment families.
 
 ## Fidelity priorities
 
