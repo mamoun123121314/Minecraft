@@ -43,7 +43,7 @@ export class Player {
     const f=forward/length, s=strafe/length;
     this.velocity.x=(Math.sin(this.yaw)*f+Math.cos(this.yaw)*s)*speed*Math.max(.1,effectSpeed)/20; this.velocity.z=(Math.cos(this.yaw)*f-Math.sin(this.yaw)*s)*speed*Math.max(.1,effectSpeed)/20;
     if(this.flying){this.velocity.y=((this.keys.has('Space')?1:0)-(this.sneaking?1:0))*speed/20;}
-    else {if(this.keys.has('Space')&&this.onGround){this.velocity.y=PLAYER_CONSTANTS.jumpVelocity;this.onGround=false;}this.velocity.y=(this.velocity.y+PLAYER_CONSTANTS.gravity)*PLAYER_CONSTANTS.verticalDrag;}
+    else {if(this.keys.has('Space')&&this.onGround){this.velocity.y=PLAYER_CONSTANTS.jumpVelocity+.05*(this.effects?.level('jump_boost')??0);this.onGround=false;}this.velocity.y=(this.velocity.y+(this.effects?.level('slow_falling')?-.01:PLAYER_CONSTANTS.gravity))*PLAYER_CONSTANTS.verticalDrag;if(this.effects?.level('slow_falling'))this.velocity.y=Math.max(-.1,this.velocity.y);}
     this.onGround=false; this.moveAxis('y',this.velocity.y);this.moveAxis('x',this.velocity.x);this.moveAxis('z',this.velocity.z);this.updateCamera();
   }
   updateCamera(){this.camera.position.set(this.position.x,this.position.y+(this.sneaking?PLAYER_CONSTANTS.sneakEyeHeight:PLAYER_CONSTANTS.eyeHeight),this.position.z);this.camera.rotation.order='YXZ';this.camera.rotation.set(this.pitch,this.yaw,0);}

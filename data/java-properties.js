@@ -841,6 +841,15 @@ export const JAVA_BLOCK_PROPERTIES=Object.freeze({
     "boundingBox": "block",
     "material": "mineable/axe"
   },
+  "white_bed": {
+    "hardness": 0.2,
+    "diggable": true,
+    "transparent": true,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block",
+    "material": "wool"
+  },
   "tnt": {
     "hardness": 0,
     "diggable": true,
