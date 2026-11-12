@@ -1,6 +1,6 @@
 {
   "name": "cubeworld",
-  "version": "1.23.0",
+  "version": "1.24.0",
   "private": true,
   "type": "module",
   "description": "A single-player voxel survival game in the browser. Original engine, original procedural art.",
@@ -29,6 +29,7 @@
     "potion-parity": "node tools/potion-parity-test.js",
     "enchanting": "node tools/enchanting-test.js",
     "smithing": "node tools/smithing-test.js",
+    "trading": "node tools/trading-test.js",
     "block-states": "node tools/block-state-test.js",
     "fluids": "node tools/fluid-test.js",
     "farming": "node tools/farming-test.js",
