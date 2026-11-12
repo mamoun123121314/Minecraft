@@ -1,5 +1,6 @@
 import{CHUNK_SIZE,CHUNK_MIN_Y,CHUNK_MAX_Y,blockIndex}from'./chunk.js';
 import{BLOCK_BY_ID}from'../../data/blocks.js';
+import{stairBoxes}from'./shapes.js';
 const FACES=[
  {normal:[1,0,0],tangents:[1,2],shade:.6,key:'side',corners:[[1,0,0],[1,0,1],[1,1,1],[1,1,0]]},{normal:[-1,0,0],tangents:[1,2],shade:.6,key:'side',corners:[[0,0,1],[0,0,0],[0,1,0],[0,1,1]]},
  {normal:[0,1,0],tangents:[0,2],shade:1,key:'top',corners:[[0,1,1],[1,1,1],[1,1,0],[0,1,0]]},{normal:[0,-1,0],tangents:[0,2],shade:.5,key:'bottom',corners:[[0,0,0],[1,0,0],[1,0,1],[0,0,1]]},
@@ -15,7 +16,7 @@ function pushCuboid(layer,uv,x,y,z,min,max,light){for(const face of FACES){for(c
 const rotateBox=(min,max,facing)=>{if(facing==='south')return[[1-max[0],min[1],1-max[2]],[1-min[0],max[1],1-min[2]]];if(facing==='east')return[[1-max[2],min[1],min[0]],[1-min[2],max[1],max[0]]];if(facing==='west')return[[min[2],min[1],1-max[0]],[max[2],max[1],1-min[0]]];return[min,max];};
 function pushModel(layer,uv,x,y,z,model,state,light){let boxes=[],facing=state?.facing;
  if(model==='slab')boxes=state?.type==='double'?[[[0,0,0],[1,1,1]]]:[state?.half==='top'||state?.type==='top'?[[0,.5,0],[1,1,1]]:[[0,0,0],[1,.5,1]]];
- if(model==='stairs')boxes=state?.half==='top'?[[[0,.5,0],[1,1,1]],[[0,0,.5],[1,.5,1]]]:[[[0,0,0],[1,.5,1]],[[0,.5,.5],[1,1,1]]];
+ if(model==='stairs')boxes=stairBoxes(state);
  if(model==='fence'||model==='wall'){const post=model==='fence'?[[.375,0,.375],[.625,1,.625]]:[[.25,0,.25],[.75,1,.75]];boxes=[post];const connected=state&&['north','south','east','west'].some(key=>key in state);for(const direction of connected?['north','south','east','west'].filter(key=>state[key]):['north','south','east','west']){if(direction==='north')boxes.push([[.375,.375,0],[.625,.9375,.5]]);if(direction==='south')boxes.push([[.375,.375,.5],[.625,.9375,1]]);if(direction==='east')boxes.push([[.5,.375,.375],[1,.9375,.625]]);if(direction==='west')boxes.push([[0,.375,.375],[.5,.9375,.625]]);}}
  if(model==='fence_gate'){boxes=state?.open?[]:[[[0,0,.375],[1,1,.625]]];}
  if(model==='trapdoor'){if(state?.open)facing={north:'west',east:'north',south:'east',west:'south'}[facing??'north'];boxes=state?.open?[[[0,0,0],[1,1,.1875]]]:[state?.half==='top'?[[0,.8125,0],[1,1,1]]:[[0,0,0],[1,.1875,1]]];}

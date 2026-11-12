@@ -32,4 +32,13 @@ export function updateConnections(world, x, y, z) {
   for (const [direction, dx, dz] of [['north', 0, -1], ['south', 0, 1], ['east', 1, 0], ['west', -1, 0]]) { const neighbor = world.getBlock(x + dx, y, z + dz), definition = BLOCK_BY_ID[neighbor]; state[direction] = Boolean(definition && (definition.solid || ['fence', 'wall', 'fence_gate'].includes(definition.model))); }
   world.setBlock(x, y, z, id, state, false);
 }
+const STAIR_VECTORS = { north:[0,-1], south:[0,1], west:[-1,0], east:[1,0] }, STAIR_LEFT = { north:'west', west:'south', south:'east', east:'north' }, OPPOSITE = { north:'south', south:'north', west:'east', east:'west' };
+export function updateStairShape(world,x,y,z) {
+  const id=world.getBlock(x,y,z),state=world.getBlockState(x,y,z);if(BLOCK_BY_ID[id]?.model!=='stairs'||!state)return;
+  const facing=state.facing??'north',half=state.half??'bottom',left=STAIR_LEFT[facing];
+  const different=(dx,dz)=>{const nx=x+dx,nz=z+dz,neighborId=world.getBlock(nx,y,nz),neighbor=world.getBlockState(nx,y,nz);return BLOCK_BY_ID[neighborId]?.model==='stairs'&&(neighbor?.half??'bottom')===half&&neighbor?.facing!==facing&&neighbor?.facing!==OPPOSITE[facing]?neighbor.facing:null;};
+  const [fx,fz]=STAIR_VECTORS[facing],[bx,bz]=[-fx,-fz],front=different(fx,fz),back=different(bx,bz);
+  const shape=front?front===left?'outer_left':'outer_right':back?back===left?'inner_left':'inner_right':'straight';
+  if((state.shape??'straight')!==shape)world.setBlock(x,y,z,id,{...state,shape},false);
+}
 export function pickBlockItem(blockId) { return Object.values(BLOCKS).find(block => block.id === blockId)?.name ?? null; }
