@@ -1,5 +1,6 @@
 import * as THREE from '../../vendor/three.module.js';
 import { WEAPONS, armorProtection, mitigateDamage } from '../../data/combat.js';
+import { enchantmentLevel } from './enchanting.js';
 
 export const MOB_DROPS = Object.freeze({ zombie: 'rotten_flesh', skeleton: 'bone', creeper: 'gunpowder', cow: 'beef', pig: 'porkchop', sheep: 'mutton', chicken: 'chicken' });
 export const attackCharge = cooldown => Math.max(0, Math.min(1, cooldown));
@@ -14,7 +15,8 @@ export class CombatSystem {
   receiveDamage(survival, amount, inventory, frontal = false, effects = null) {
     amount *= 1 - (effects?.level('resistance') ?? 0) * .2;
     const shielded = this.blocking && frontal && inventory.equipment.offhand?.id === 'shield' ? Math.max(0, amount - 5) : amount;
-    const reduced = mitigateDamage(shielded, this.protection(inventory));
+    const epf = Object.values(inventory.equipment).reduce((sum,stack)=>sum+enchantmentLevel(stack,'protection'),0);
+    const reduced = mitigateDamage(shielded, this.protection(inventory)) * (1-Math.min(20,epf)*.04);
     return survival.damage(reduced, 'combat');
   }
   attack(mob, itemId, player, mobs, inventory, effects = null) {
@@ -23,9 +25,9 @@ export class CombatSystem {
     if (dx * dx + dy * dy + dz * dz > 9) return null;
     const weapon = WEAPONS[itemId] ?? { damage: 1, attackSpeed: 4 };
     const charge = this.charge, critical = player.velocity.y < 0 && !player.onGround && !player.sprinting;
-    const damage = Math.max(0, chargedDamage(weapon.damage, charge, critical) + (effects?.level('strength') ?? 0) * 3 - (effects?.level('weakness') ?? 0) * 4);
+    const damage = Math.max(0, chargedDamage(weapon.damage, charge, critical) + (enchantmentLevel(inventory.held,'sharpness')*.5+.5*(enchantmentLevel(inventory.held,'sharpness')>0)) + (effects?.level('strength') ?? 0) * 3 - (effects?.level('weakness') ?? 0) * 4);
     this.maximumCooldown = Math.max(1, Math.round(20 / weapon.attackSpeed)); this.cooldown = 0;
-    if (WEAPONS[itemId]) inventory.damageSelected(1);
+    if (WEAPONS[itemId]) inventory.damageSelected(1,this.random);
     return this.hurt(mob, damage, mobs, { x: dx, z: dz }, 6 + (critical ? 2 : 0));
   }
   hurt(mob, amount, mobs, direction = { x: 0, z: 0 }, knockback = 0) {

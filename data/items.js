@@ -4,7 +4,8 @@ const item=(name,options={})=>Object.freeze({name:name.split('_').map(word=>word
 const catalog={};
 for(const block of Object.values(BLOCKS))if(block.name!=='air'&&!['water','lava'].includes(block.name))catalog[block.name]=item(block.name,{block:block.id});
 const materials=['wooden','stone','iron','golden','diamond','netherite'];for(const material of materials)for(const tool of['pickaxe','axe','shovel','sword','hoe'])catalog[`${material}_${tool}`]=item(`${material}_${tool}`,{stack:1,durability:{wooden:59,stone:131,iron:250,golden:32,diamond:1561,netherite:2031}[material]});
-for(const material of['leather','chainmail','iron','golden','diamond','netherite'])for(const piece of['helmet','chestplate','leggings','boots'])catalog[`${material}_${piece}`]=item(`${material}_${piece}`,{stack:1});
+const armorDurability={leather:[55,80,75,65],chainmail:[165,240,225,195],iron:[165,240,225,195],golden:[77,112,105,91],diamond:[363,528,495,429],netherite:[407,592,555,481]};
+for(const material of['leather','chainmail','iron','golden','diamond','netherite'])for(const [index,piece]of['helmet','chestplate','leggings','boots'].entries())catalog[`${material}_${piece}`]=item(`${material}_${piece}`,{stack:1,durability:armorDurability[material][index]});
 catalog.rotten_flesh=item('rotten_flesh');catalog.trident=item('trident',{stack:1,durability:250});catalog.bow=item('bow',{stack:1,durability:384});catalog.shield=item('shield',{stack:1,durability:336});
 catalog.potion=item('potion',{stack:1});for(const name of['glass_bottle','dragon_breath','gold_nugget','brown_mushroom','blaze_powder','ghast_tear','spider_eye','fermented_spider_eye','glistering_melon_slice','magma_cream','pufferfish','sugar'])catalog[name]=item(name);
 for(const name of['wheat_seeds','beetroot_seeds','pumpkin_seeds','melon_seeds','cocoa_beans','bone_meal'])catalog[name]=item(name);

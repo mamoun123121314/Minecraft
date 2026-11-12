@@ -6,15 +6,15 @@ Baseline: **Java 26.1.2** from [PrismarineJS minecraft-data](https://github.com/
 
 | Registry | Current Java | Cubeworld overlap | Coverage |
 |---|---:|---:|---:|
-| Blocks | 1168 | 153 | 13.10% |
+| Blocks | 1168 | 154 | 13.18% |
 | Items | 1506 | 278 | 18.46% |
-| Recipes | 887 | 131 | 14.77% |
+| Recipes | 887 | 132 | 14.88% |
 | Entities | 157 | 9 | 5.73% |
 | Biomes | 65 | 5 | 7.69% |
 
 ## Behavior coverage
 
-Registry overlap is not behavior parity. Cubeworld 1.21.0 remains approximately **26% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families have real placement, model and collision states. Stairs calculate inner/outer corner shapes from live neighbors, and selection uses voxel DDA plus exact shape-box ray intersections for slabs, stairs, doors, trapdoors, gates, fences and walls. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
+Registry overlap is not behavior parity. Cubeworld 1.22.0 remains approximately **27% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families have real placement, model and collision states. Stairs calculate inner/outer corner shapes from live neighbors, and selection uses voxel DDA plus exact shape-box ray intersections for slabs, stairs, doors, trapdoors, gates, fences and walls. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
 
 ### Brewing and effects (1.20.0)
 
@@ -35,6 +35,14 @@ This is not full Java brewing parity: turtle-master, invisibility, night-vision,
 Stairs use straight, inner-left/right and outer-left/right state derived from adjacent stair facing and half. Placement and removal update affected neighbors, including across chunk lookups. A shared stair-box model drives both collision and meshing. Selection traverses voxels with DDA and intersects the actual shape boxes rather than sampling full voxels; returned hit normals determine the adjacent placement cell. Open doors and gates remain selectable, and fence/wall selection follows posts and rails while collision retains its 1.5-block movement barrier.
 
 Remaining geometry differences include exact Java corner-resolution edge cases for unusual multi-stair arrangements, shaped highlight outlines, contextual slab placement and full Java selection shapes for every non-wood block. Placement still rejects the whole voxel when intersecting the player.
+
+### Enchanting progression (1.22.0)
+
+An original enchanting-table block and interface provide three deterministic offers based on table position, item and bookshelf power. Bookshelves use a two-high ring, obstruction checks and a 15-shelf cap. Enchanting consumes one to three lapis and displayed XP levels, rerolls offers, preserves item damage/metadata, and returns machine inputs when closed. Ore mining and mob kills award XP; the HUD displays levels.
+
+Efficiency adds level-squared-plus-one speed with a correct tool, Sharpness adds 0.5×level+0.5 melee damage, Protection supplies capped post-armor EPF reduction, and Unbreaking uses separate tool/armor durability-save probabilities. Armor now has material/piece durability values and breaks through the existing equipment path.
+
+This is not the complete Java enchantment system: only four enchantment families are available, offer generation is deterministic but not Java's exact enchantability/seed algorithm, XP costs reset the current level's progress, and enchanted books, anvils, grindstones, villager trading and most treasure/specialized enchantments remain unimplemented.
 
 ## Fidelity priorities
 

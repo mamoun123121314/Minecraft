@@ -26,6 +26,8 @@ jobs:
         run: npm run brewing
       - name: Potion parity
         run: npm run potion-parity
+      - name: Enchanting progression
+        run: npm run enchanting
       - run: npm run save
       - run: npm run world
       - run: npm run gravity
