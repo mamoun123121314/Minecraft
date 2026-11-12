@@ -28,6 +28,8 @@ jobs:
         run: npm run potion-parity
       - name: Enchanting progression
         run: npm run enchanting
+      - name: Anvil and grindstone
+        run: npm run smithing
       - run: npm run save
       - run: npm run world
       - run: npm run gravity

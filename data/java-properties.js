@@ -1,5 +1,29 @@
 // Generated from minecraft-data 3.119.0 for Java 26.1.2. Factual registry values only.
 export const JAVA_BLOCK_PROPERTIES=Object.freeze({
+  "anvil": {
+    "hardness": 5,
+    "material": "mineable/pickaxe",
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block"
+  },
+  "grindstone": {
+    "hardness": 2,
+    "material": "mineable/pickaxe",
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block"
+  },
+  "stone_slab": {
+    "hardness": 2,
+    "material": "mineable/pickaxe",
+    "transparent": false,
+    "emitLight": 0,
+    "filterLight": 0,
+    "boundingBox": "block"
+  },
   "brewing_stand": {
     "hardness": 0.5,
     "material": "mineable/pickaxe",
