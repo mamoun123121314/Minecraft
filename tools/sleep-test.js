@@ -1,0 +1,10 @@
+import assert from'node:assert/strict';
+import{SleepSystem}from'../src/systems/sleep.js';
+const time={ticks:13000,set(ticks){this.ticks=ticks;}},weather={rain:100,set(kind){this.rain=kind==='clear'?0:100;}},mobs={entities:[{stats:{hostile:true},hp:10,position:{x:3,y:64,z:0}}]},sleep=new SleepSystem();
+let result=sleep.use(time,weather,{x:0,y:64,z:0},mobs);
+assert.equal(result,'monsters');assert.deepEqual(sleep.spawn,{x:.5,y:65,z:.5});
+mobs.entities=[];result=sleep.use(time,weather,{x:0,y:64,z:0},mobs);
+assert.equal(result,'slept');assert.equal(time.ticks,0);assert.equal(weather.rain,0);
+time.ticks=6000;result=sleep.use(time,weather,{x:2,y:64,z:0},mobs);
+assert.equal(result,'day');assert.deepEqual(sleep.spawn,{x:2.5,y:65,z:.5});
+console.log('Sleep/respawn passed.');

@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {BreedingSystem} from '../src/systems/breeding.js';
+let nextId=1;
+const animal=(type,x=0,z=0)=>({id:nextId++,type,position:{x,y:64,z},stats:{hp:10,speed:2},hp:10,mesh:{scale:{setScalar(){}}}});
+const mobs={entities:[],spawn(type,x,y,z){const mob=animal(type,x,z);mob.position.y=y;this.entities.push(mob);return mob;}};
+mobs.entities.push(animal('cow'),animal('cow',2));
+const breeding=new BreedingSystem(()=>.5);
+assert.equal(breeding.feed(mobs.entities[0],'wheat'),true);
+assert.equal(breeding.feed(mobs.entities[0],'wheat'),true);
+assert.equal(mobs.entities[0].loveTicks,600);
+assert.equal(breeding.feed(mobs.entities[1],'wheat'),true);
+for(let i=0;i<400;i+=1)breeding.tick(mobs);
+assert.equal(mobs.entities.length,3);
+assert.equal(mobs.entities[2].baby,true);
+assert.ok(mobs.entities[0].breedingCooldown>=5600&&mobs.entities[0].breedingCooldown<6000);
+for(let i=0;i<24000;i+=1)breeding.tick(mobs);
+assert.equal(mobs.entities[2].baby,false);
+console.log('Breeding passed.');

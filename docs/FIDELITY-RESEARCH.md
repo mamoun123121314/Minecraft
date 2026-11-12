@@ -14,7 +14,7 @@ Baseline: **Java 26.1.2** from [PrismarineJS minecraft-data](https://github.com/
 
 ## Behavior coverage
 
-Registry overlap is not behavior parity. Cubeworld 1.24.0 remains approximately **29% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families have real placement, model and collision states. Stairs calculate inner/outer corner shapes from live neighbors, and selection uses voxel DDA plus exact shape-box ray intersections for slabs, stairs, doors, trapdoors, gates, fences and walls. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
+Registry overlap is not behavior parity. Cubeworld 1.25.0 remains approximately **35% behavior-complete** across the full requested Java scope. This engineering estimate weighs integrated mechanics, not names. Wood families have real placement, model and collision states. Stairs calculate inner/outer corner shapes from live neighbors, and selection uses voxel DDA plus exact shape-box ray intersections for slabs, stairs, doors, trapdoors, gates, fences and walls. Most non-wood families, entities, dimensions, structures and progression remain incomplete.
 
 ### Brewing and effects (1.20.0)
 
@@ -55,6 +55,12 @@ Remaining differences include material-based repair, renaming, prior-work cost s
 Farmer, librarian and toolsmith villagers spawn with stable IDs and professions. Right-click entity targeting opens a trading interface showing inputs, outputs, stock and affordability. Offers include crop/coal/paper sales, food and tools, and librarian enchanted books. Multi-input trades validate inventory and stock, consume inputs, add typed outputs and award player/villager XP. Output-capacity failure rolls back inventory and stock. Limited uses rebuild when the 24,000-tick clock wraps into a new day.
 
 This is a compact trading system, not full villager parity: offers are fixed rather than unlocked through profession levels, stock is not tied to workstations or work schedules, and exact Java prices/trade pools differ. Village generation, pathfinding, breeding, gossip/reputation, raids, zombie curing and the remaining professions remain unimplemented.
+
+### Animals, fishing, beds, TNT and effects (1.25.0)
+
+Cows, sheep, pigs and chickens consume species-specific food, seek partners in love mode, produce half-scale babies, mature after 24,000 ticks and obey breeding cooldowns and local animal caps. Fishing rods cast at raycast water, wait 100–600 ticks, and retrieve weighted fish, treasure or junk with durability and XP. Beds set a persistent respawn point and, after the night threshold with no nearby living hostile, reset time and weather. Flint and steel primes TNT for 80 ticks; blasts remove destructible blocks in a radius-four sphere, preserve bedrock, damage players/mobs, drop a deterministic quarter of mined drops and chain neighboring charges. Night vision, invisibility, jump boost and slow falling now affect rendering, hostile aggro, jumping and gravity. Cod, salmon and pufferfish are edible; golden carrots and additional brewing ingredients/recipes are available.
+
+These are compact mechanics, not complete Java parity: fishing uses a simplified loot table without Luck of the Sea or open-water rules; breeding lacks complete AI/pathfinding and all other species; sleeping is instantaneous and single-player-only; TNT uses deterministic spherical damage/destruction rather than Java ray sampling, blast resistance and entity physics. Potions still omit undead inversion and many effects.
 
 ## Fidelity priorities
 
